@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkSphere</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="back"></div>
+    <div class="container">
+        <header><h1>Staff Mode</h1></header>
+        <div class="container_body c1">
+            <div class="logo">
+                <div class="imgs"><img src="imgs/WS_logo_web.png" alt="logo"></div>
+                <h1>WORK<span class="logo_blue">SPHERE</span></h1>
+            </div>
+            <div class="contenair_inputs">
+                <div class="inputs">
+                    <p style="display: none;" id="msg_confirmation">Account created successefully !</p>
+                    <p style="display: none;" id="msg_refuse">That already existed !</p>
+
+                    <label for="email">Full name</label><br>
+                    <input type="text" placeholder="Enter your Name" id="full_name" required>
+                </div>
+                <div class="inputs">
+                    <label for="email">Worksphere ID</label><br>
+                    <input type="text" placeholder="Enter id" id="identificateur" required>
+                </div>
+                <div class="inputs">
+                    <label for="email">Your Email</label><br>
+                    <input type="text" placeholder="Enter your Email" id="email" required>
+                </div>
+                <div class="inputs">
+                    <label for="email">Your Password</label><br>
+                    <input type="text" placeholder="Enter your Password" id="password" required>
+                </div>
+                
+                <div class="btn_part btn_log">
+                    <button id="btn_register">SIGN IN</button>
+                    <div>
+                        <p>Already have an account?</p>
+                        <a href="index.html">Log in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
