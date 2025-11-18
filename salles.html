@@ -8,30 +8,106 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body class="body_salles">
-    <div class="modal">
+    
+    <div class="modal" id="modale">
+        <h3>Add a new staff</h3>
+
         <form>
             <div>
-                <label for="f_name"></label>
+                <label for="f_name">Full Name</label>
                 <input type="text" placeholder="Full Name" id="f_name">
             </div>
             <div>
+                <label for="role">Role</label>
                 <select name="role" id="role">
                     <option value="">Choisissez un role</option>
-                    <option value="">Choisissez un role</option>
-                    <option value="">Choisissez un role</option>
-                    <option value="">Choisissez un role</option>
-                    <option value="">Choisissez un role</option>
+                    <option value="Développeur Front-end">Développeur Front-end</option>
+                    <option value="Développeur Back-end">Développeur Back-end</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Récipionist">Récipionist</option>
                 </select>
             </div>
             <div>
-                <label for="f_name"></label>
-                <input type="text" placeholder="Full Name" id="f_name">
+                <label for="worker_img" class="label_img"> Photo (URL)</label>
+                <div class="prev_img"> <img src="imgs/profile.png" alt=""></div>
+                <input type="text" placeholder="ex : https:://img12.jpg" id="worker_img">
             </div>
-            
+            <div>
+                <label for="worker_email"> Email</label>
+                <input type="email" placeholder="ex : person1@gmail.com" id="worker_email">
+            </div>
+            <div>
+                <label for="worker_phone"> Phone Number</label>
+                <input type="text" placeholder="ex : +212659897869" id="worker_phone">
+            </div>
+            <div class="experience" id="exps">
+                <label class="exp_label">Experiences</label>
+                <div class="btns_experiences">
+                <input type="text" placeholder="Experience" id="experi">
+                <input type="date" placeholder="Start date" id="s_date">
+                <input type="date" placeholder="end date " id="end_date">
+                <button class="add_exp" id="add_experience" >+</button>
+                <button class="rmv_exp " id="rmv_experience">-</button>
+                </div>
+                
+                
+            </div>
+            <div>
+                <label for="worker_local"> City</label>
+                <input type="text" placeholder="ex : Fes" id="worker_local">
+            </div>
         </form>
+    
+            
+       
+        <div class="modal_btns">
+            <p class="msgs_staffs" style="display: none;" id="suucces_btn">Staff added successfully !</p>
+            <button id="add_btn">Add</button>
+            <button class="rmv_btn" id="remove_btn">Cancel</button>
+        </div>
+    </div>
+    <div class="modale_infos_user" id="modale_infos_user">
+        <button class="hide_modale_user" id="hide_modale_user">x</button>
+        <div class="head_cv">
+            <div class="left_side_cv">
+            <img src="imgs/profile.png" alt="">
+            </div>
+        <div class="right_side_cv">
+            <div class="first_side">
+            <div><span>Nom : </span>Mouad saber</div>
+            <div><span>Role : </span>Manager</div>
+            <div><span>Email : </span>Mouadsfdbfjf@gmail.com</div>
+            </div>
+            <div class="second_side">
+                <div><span>Phone : </span>+21253659874</div>
+                <div><span>Location : </span>Fes</div>
+            </div>
+        </div>
+        </div>
+        <div class="table_exp">
+            <h2>Experiences :</h2>
+            <table>
+                <tr>
+                    <th>Experience</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: center;">NO EXPERIENCES</td>
+                    
+                </tr>
+
+
+            </table>
+        </div>
     </div>
 
-    <aside class="left_side">
+    <aside class="left_side" id="left_side">
+        
+            <div class="menu_btns">
+                
+                <button class="hide_menu" id="hide_menu">x</button>
+            </div>
             <div class="logo_ws">
                 <div class="logo_ws_img"><img src="imgs/logo.png" alt=""></div>
                 <p><span class="s1">WS</span> <br> WORK<span class="s2">SPHERE</span></p>
@@ -57,8 +133,9 @@
                 <li class="dernier_liens"><i class='bxr  bx-arrow-big-left-line'  style='color:#ffffff; font-size: 3vmin;'  ></i>   <a href="#">LOG OUT</a></li>
             </ul>
     </aside>
+    <button class="show_menu" id="show_menu">></button>
     <main class="global_container">
-        <div class="head_gcontainer">
+        <div class="head_container">
             <div class="search_input">
                 <input type="search" placeholder="Recherchez">
             <i class='bxr  bx-search'  style='color:#073F69'  ></i> 
@@ -122,16 +199,41 @@
             <div class="part_left">
                 <div class="part_rooms">
                     <h3>ROOMS</h3>
-                    <button>Voir Tout</button>
+                    <button id="add_rooms">Add room</button>
                 </div>
-                <div class="sections_room">
+                <div class="sections_room" id="sections_room">
                     <div class="room">
                         <p class="room_title">Salle de conférence</p>
                         <div class="zone">
                         <button class="add_member">+</button>
                         <p class="number_members">1/8</p>
                         </div>
-                        
+                        <div class="show_members" id="show_members">
+                            <h2>Salle de conférence</h2>
+                            <button class="close_users_room" id="close_users_room">x</button>
+                            <div class="users_container">
+                                <div class="staff_infos">
+                                <div class="staff_infos1">
+                                <img src="imgs/profile.png" alt="">
+                                </div>
+                                <div class="staff_infos2">
+                                <h3>Name</h3>
+                                <p>Poste</p>
+                                <button class="delete_user">x</button>
+                                </div>
+                            </div>
+                            <div class="staff_infos">
+                                <div class="staff_infos1">
+                                <img src="imgs/profile.png" alt="">
+                                </div>
+                                <div class="staff_infos2">
+                                <h3>Name</h3>
+                                <p>Poste</p>
+                                <button class="delete_user">x</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="room">
                         <p class="room_title">Salle de Réception</p>
@@ -175,41 +277,19 @@
                     </div>
                 </div>
             </div>
-            <aside class="part_right">
+            <aside class="part_right" id="part_right">
                 <div class="part_users">
                     <h3>Unassigned</h3>
                     <button id="add_worker_btn">Add worker</button>
                 </div>
-                <div class="part_users_added">
-                    <div class="user_photo">
-                        <img src="imgs/profile.png" alt="">
-                    </div>
-                    <h3>Mouad Saber</h3>
-                    <p>Développeur Front-End</p>
-                    <button>Details</button>
-                </div>
-                <div class="part_users_added">
-                    <div class="user_photo">
-                        <img src="imgs/profile.png" alt="">
-                    </div>
-                    <h3>Mouad Saber</h3>
-                    <p>Développeur Front-End</p>
-                    <button>Details</button>
-                </div>
-                <div class="part_users_added">
-                    <div class="user_photo">
-                        <img src="imgs/profile.png" alt="">
-                    </div>
-                    <h3>Mouad Saber</h3>
-                    <p>Développeur Front-End</p>
-                    <button>Details</button>
-                </div>
+                
+             
                 
 
             </aside>
         </section>
 
     </main>
-  
+  <script src="js/modale.js"></script>
 </body>
 </html>

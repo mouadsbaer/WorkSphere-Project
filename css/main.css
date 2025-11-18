@@ -198,6 +198,7 @@ body{
     font-weight: bold;
     font-size: 2vmin;
     color: whitesmoke;
+    
 }
 .logo_ws p .s1{
     font-weight: bold;
@@ -289,45 +290,45 @@ padding: 20px 10px;
     border-radius: 11px;
     
 }
-.global_container .head_gcontainer .search_input{
+.global_container .head_container .search_input{
     display: flex;
     align-items: center;
     position: relative;
     
 }
-.global_container .head_gcontainer .search_input input{
-    width: 500px;
+.global_container .head_container .search_input input{
+    width: 400px;
     height: 35px;
     border-radius: 8px;
     border: 1px solid #2196F3;
     padding: 0 90px;
 }
-.global_container .head_gcontainer .search_input i{
+.global_container .head_container .search_input i{
     position: absolute;
     left: 5px;
     font-size: 3vmin;
 }
-.global_container .head_gcontainer{
+.global_container .head_container{
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 300px;
+    gap: 150px;
     margin: 20px 30px;
 }
-.global_container .head_gcontainer .head_right_btns{
+.global_container .head_container .head_right_btns{
     display: flex;
     justify-content: space-between;
     gap: 40px;
     align-items: center;
 }
 
-.global_container .head_gcontainer .head_right_btns .container_cercle{
+.global_container .head_container .head_right_btns .container_cercle{
     border: 1px solid #2196F3;
     width: 40px;
     height: 20px;
     border-radius: 10px;
 }
-.global_container .head_gcontainer .head_right_btns .container_cercle .cercle{
+.global_container .head_container .head_right_btns .container_cercle .cercle{
     width: 16px;
     height: 16px;
     background-color: #073F69;
@@ -336,14 +337,14 @@ padding: 20px 10px;
     margin-left: 2px;
 }
 
-.global_container .head_gcontainer .head_right_btns .head_right_btns_icon2{
+.global_container .head_container .head_right_btns .head_right_btns_icon2{
     background-color: #073F69;
     padding: 8px 10px ;
     border-radius: 8px;
     font-size: 3vmin;
     font-weight: bold;
 }
-.global_container .head_gcontainer .head_right_btns .head_right_btns_icon1{
+.global_container .head_container .head_right_btns .head_right_btns_icon1{
     border:1px solid #073F69;
     padding: 8px 10px ;
     border-radius: 8px;
@@ -365,12 +366,15 @@ padding: 20px 10px;
 
 .section_general .section_infos{
     border: 1px solid #2196F3;
-    width: 23%;
+    width: 90%;
+    height: 170px;
     padding: 20px;
     border-radius: 9px;
     transition: .5s;
     cursor: pointer;
     box-shadow: 2px 2px 7px #2196F3;
+    margin: 0 10px;
+  
 }
 .section_general .section_infos:hover{
     background: #096dba61;
@@ -383,6 +387,8 @@ padding: 20px 10px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    width: 100%;
+
     gap: 50px;
     padding: 20px 0;
     
@@ -399,9 +405,10 @@ padding: 20px 10px;
     font-weight: bold;
 }
 .section_general .secs_section{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(1,1fr);
+    margin: 0 40px;
 }
 .sec_rooms{
     margin: 30px ;
@@ -599,6 +606,353 @@ padding: 20px 10px;
     background-color: #073F69;
     box-shadow: 2px 2px 7px #2196F3;
 }
+.body_salles .modal{
+    position: absolute;
+    background: #FFFFFF;
+    box-shadow: 2px 2px 7px #2196F3;
+    border: 2px solid #2196F3;
+    padding: 20px 50px;
+    width: 65%;
+    border-radius: 15px;
+    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    opacity: 0;
+  
+    margin: 50px 0;
+    transition: .5s;
+}
+.modal_btns button{
+    border-radius: 10px;
+   border: 1px solid #0466C8;
+   margin: 11px 0 0 0;
+   width: 80px;
+   padding: 12px 0;
+   background-color: #0466C8;
+   color: whitesmoke;
+   font-weight: bold;
+  
+}
+.body_salles .modal .experience .add_exp{
+    padding: 0 11px ;
+    font-size: 4vmin;
+    border: 1px solid #0466C8;
+    box-shadow: 2px 2px 7px #2196F3;
+    background: transparent;
+    border-radius: 5px;
+    color: whitesmoke;
+    background-color: #0466C8;
+    transition: .5s;
+}
+.body_salles .modal .experience .add_exp:hover{
+    background-color: #409af3;
+    cursor: pointer;
+    color: #000000;
+}
+.body_salles .modal .experience .rmv_exp{
+    padding: 0 11px ;
+    font-size: 4vmin;
+    border: 1px solid #0466C8;
+    box-shadow: 2px 2px 7px #2196F3;
+    background: transparent;
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+    background-color: #FFFFFF;
+    transition: .5s;
+}
+.body_salles .modal .experience .rmv_exp:hover{
+    background-color: #409af3;
+    cursor: pointer;
+    color: #FFFFFF;
+}
+
+.modal.open{
+    opacity: 1;
+    z-index: 1999;
+}
+.modal_btns button:hover{
+    background-color: #042137;
+    cursor: pointer;
+}
+.modal_btns .rmv_btn{
+    background: #FFFFFF;
+    color: black;
+}
+.modal_btns .rmv_btn:hover{
+     background-color: #0466C8;
+     color: whitesmoke;
+}
+.modal_btns{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+}
+
+.body_salles .modal form div{
+    padding: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.body_salles .modal form div label{
+    font-size: 2.9vmin;
+    margin: 0 50px;
+    width: 30%;
+    font-weight: 600;
+    
+}
+.body_salles .modal form div .label_img{
+    margin: 0 40px;
+    width: 20%;
+}
+
+.body_salles .modal form input , .body_salles .modal form select{
+    width: 350px;
+    height: 35px;
+    border-radius: 5px;
+   border: 1px solid #0466C8;
+   width: 60%;
+   padding: 0 20px;
+}
+.body_salles .modal form .experience div input{
+    margin: 0 10px;
+}
+.body_salles .modal form .experience button{
+    margin: 0 5px;
+}
+.body_salles .modal h3{
+    color: #0466C8;
+    font-size: 4.5vmin;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.msgs_staffs{
+    text-align: center;
+    font-size: 2.3vmin;
+    border: 1px solid #07d507;
+    background-color: #2ef22ec8;
+    padding: 5px 70px;
+    color: whitesmoke;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.menu_btns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.prev_img{
+    width: 15%;
+    border-radius:7px ;
+   
+}
+.prev_img img{
+    width: 100%;
+     border-radius:7px ;
+    box-shadow: 1px 1px 10px #0d83dd;
+}
+.show_menu{
+    font-size: 5vmin;
+    font-weight: bolder;
+    color: whitesmoke;
+    background: #0466C8;
+    border: #0466C8;
+    box-shadow: 2px 2px 7px #0466C8;
+    padding: 5px 10px ;
+    border-radius: 5px;
+    position: absolute;
+    margin: 10px;
+    display: none;
+}
+.hide_menu{
+    font-size: 5vmin;
+    font-weight: bolder;
+    color: whitesmoke;
+    background: rgba(194, 9, 9, 0.76);
+    border: red;
+    box-shadow: 1px 1px 7px red;
+    padding: 5px 10px ;
+    border-radius: 5px;
+    display: none;
+}
+.hide_modale_user{
+    font-size: 5vmin;
+    font-weight: bolder;
+    color: whitesmoke;
+    background: rgba(194, 9, 9, 0.76);
+    border: red;
+    box-shadow: 1px 1px 7px red;
+    padding: 5px 10px ;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#s_date, #end_date{
+    width: 130px;
+}
+.modale_infos_user{
+    background-color: #FFFFFF;
+    width: 65%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    padding: 40px 20px;
+    border: 1px solid #2196F3;
+    box-shadow: 2px 2px 13px #2196F3;
+    z-index: -11;
+    opacity: 0;
+    transition: .5s;
+}
+.modale_infos_user.open{
+    z-index: 999;
+    opacity: 1;
+}
+.modale_infos_user .head_cv{
+    display: flex;
+    justify-content: flex-start;
+    gap: 100px;
+    align-items: center;
+    margin: 0 0 50px 0;
+
+
+}
+.modale_infos_user .head_cv .left_side_cv{
+    width: 23%;
+
+}
+.modale_infos_user .head_cv .left_side_cv img{
+    width: 100%;
+    border: 2px solid #2196F3;
+    box-shadow: 2px 2px 15px #2196F3;
+}
+.modale_infos_user .head_cv .right_side_cv{
+    display: flex;
+    gap: 90px;
+}
+.modale_infos_user .head_cv .right_side_cv div{
+    margin: 30px 0;
+}
+.modale_infos_user .head_cv .right_side_cv span{
+    font-size: 2.7vmin;
+    color: #096EBA;
+    font-weight: bolder;
+}
+.modale_infos_user .table_exp h2{
+    color: #096EBA;
+    margin: 10px 10px 50px 10px;
+}
+.modale_infos_user .table_exp table {
+    width: 90%;
+    margin: 20px 70px;
+    border-spacing: 0;
+    border-radius: 50px;
+}
+.modale_infos_user .table_exp table th{
+    background-color: #096EBA;
+    padding: 13px 30px;
+    border: 3px solid rgb(255, 255, 255);
+    font-size: 2.5vmin;
+    color: whitesmoke;
+
+}
+.modale_infos_user .table_exp table td{
+    padding: 15px;
+    border: 3px solid #ffffff;
+}
+.modale_infos_user .table_exp table tr:nth-child(3){
+    background-color: #2196F3;
+    color: white;
+}
+.show_members{
+    width: 40%;
+    height: 60%;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    box-shadow: 2px 2px 15px #2196F3;
+    border: 1px solid #2196F3;
+    border-radius: 10px;
+    opacity: 0;
+    z-index: -2;
+}
+.show_members h2{
+    color: #ffffff;
+    text-align: center;
+    font-size: 3.5vmin;
+    padding: 10px 0;
+    background-color: #2196F3;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.show_members .staff_infos .staff_infos1{
+    width: 20%;
+}
+.show_members .staff_infos .staff_infos1 img{
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: 2px 2px 7px #2196F3;
+}
+.show_members .staff_infos{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 46%;
+    padding: 5px 20px;
+    border: 1px solid #2196F3;
+    border-radius: 10px;
+    margin: 10px;
+    position: relative;
+    background-color: #ffffff;
+}
+.show_members .staff_infos .staff_infos2{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 35px;
+
+}
+.show_members .staff_infos .staff_infos2 h3{
+    color: #0466C8;
+}
+.show_members .staff_infos .staff_infos2 .delete_user{
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background-color: red;
+    color: whitesmoke;
+    padding: 3px 5px ;
+    border-top-right-radius: 10px;
+    border: none;
+
+}
+.close_users_room{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: whitesmoke;
+    padding: 5px 10px ;
+    border-top-right-radius: 10px;
+    border: none;
+    font-size: 3vmin;
+    font-weight: bold;
+}
+
+.users_container{
+    display: flex;
+}
+.sections_room .room .show_members.affiche{
+    opacity: 1;
+     z-index: 99999;
+}
 
 @media screen and (max-width: 1023px) and (min-width: 768px){
     .back{
@@ -633,9 +987,95 @@ padding: 20px 10px;
         width: 100%;
          margin: 0;
     }
+    .global_container .head_container{
+        gap: 30px;
+    }
+    .global_container .head_container .search_input input{
+        width: 100%;
+    }
+    .logo_ws{
+        flex-direction: column;
+    }
+    .logo_ws .logo_ws_img{
+        width: 70%;
+    }
+    .logo_ws .logo_ws_img img{
+        width: 100%;
+    }
+    .logo_ws p{
+    font-size: 2.5vmin;
+    text-align:center;
+    }
+    .profile_section .profile_img{
+    
+    margin-bottom: 20px;
+    margin-left: 20px;
+   
+    }
+    .profile_section{
+        margin: 50px 10px;
+    }
+    .menu li a{
+        font-size: 1.8vmin;
+    }
+    .menu li{
+        width: fit-content;
+        padding: 20px;
+        width: 130px;
+    }
+    .menu .menu_section{
+        font-size: 1.5vmin;
+    }
+    .section_general .secs_section{
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2,1fr);
+    margin: 0 40px;
+    }
+    .section_general .section_infos{
+        margin: 20px;
+    }
+    .menu {
+    padding:10px 0;
+    }
+    .sec_rooms{
+        flex-direction: column;
+    }
+    .sec_rooms .part_left{
+        width: 100%;
+    }
+    .sec_rooms .part_right{
+    width: 100%;
+}
+.body_salles .modal{
+    margin: 1000px 0;
+    width: 80%;
+
+ 
+
+    transition: .5s;
+}
+.btns_experiences{
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.modale_infos_user{
+    padding: 20px;
+    margin: 1030px auto;
+}
+.modale_infos_user .table_exp table{
+    margin: 20px;
+}
+.modale_infos_user .head_cv .right_side_cv{
+    
+    gap: 20px;
+}
+.modale_infos_user .head_cv{
+    gap: 50px;
+}
+
 }
 @media screen and (max-width: 767px){
-        .back{
+    .back{
         display: none;
     }
     body{
@@ -668,5 +1108,124 @@ padding: 20px 10px;
         position: absolute;
         bottom: -110px;
     }
-  
+
+   
+    .global_container .head_container{
+        gap: 30px;
+        flex-direction: column;
+    }
+    .global_container .head_container .search_input input{
+        width: 100%;
+    }
+    .global_container{
+        width: 100%;
+    }
+    .show_menu{
+        display: block;
+    }
+    /*retour ici*/
+    .left_side{
+        position: absolute;
+        background-color: #004E89;
+        width: 40%;
+        z-index: 99;
+        padding: 20px;
+        height: 150%;
+        border-bottom-right-radius: 30px;
+        left: -300px;
+        transition: .5s;
+    }
+    .left_side.afficher{
+        left: 0;
+    }
+    .logo_ws{
+        flex-direction: column;
+        
+    }
+    .logo_ws .logo_ws_img{
+        width: 70%;
+    }
+    .logo_ws .logo_ws_img img{
+        width: 100%;
+    }
+    .logo_ws p{
+    font-size: 2.5vmin;
+    text-align:center;
+    }
+    .profile_section .profile_img{
+    
+    margin-bottom: 20px;
+    margin-left: 20px;
+   
+    }
+    .profile_section{
+        margin: 50px 10px;
+    }
+    .menu li a{
+        font-size: 1.8vmin;
+    }
+    .menu li{
+        width: fit-content;
+        padding: 20px;
+        width: 130px;
+    }
+    .menu .menu_section{
+        font-size: 1.5vmin;
+    }
+    .section_general .secs_section{
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(4,1fr);
+    margin: 0 40px;
+    }
+    .section_general .section_infos{
+        margin: 20px;
+    }
+    .menu {
+    padding:10px 0;
+    }
+    .sec_rooms{
+        flex-direction: column;
+    }
+    .sec_rooms .part_left{
+        width: 100%;
+    }
+    .sec_rooms .part_right{
+    width: 100%;
+    }
+    .body_salles .modal{
+        margin: 1300px 0;
+        width: 80%;
+        transition: .5s;
+    }
+    .btns_experiences{
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .body_salles .modal{
+        padding: 10px 5px;
+    }
+    .body_salles .modal form div label{
+        margin: 10px 20px;
+    }
+    .hide_menu{
+        display:  block;
+    }
+    .modale_infos_user .head_cv{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .modale_infos_user{
+        margin: 1250px 0;
+    }
+    .modale_infos_user .head_cv .right_side_cv{
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .modale_infos_user .table_exp table{
+        margin: 5px;
+        width: 50%;
+    }
+    .prev_img{
+        width: 45%;
+    }
 }
