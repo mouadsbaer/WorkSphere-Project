@@ -1,4 +1,4 @@
-let add_worker_btn = document.getElementById('add_worker_btn');
+const add_worker_btn = document.getElementById('add_worker_btn');
 let modale = document.getElementById('modale');
 let remove_btn = document.getElementById('remove_btn');
 let add_experience = document.getElementById('add_experience');
@@ -23,8 +23,14 @@ let hide_modale_user = document.getElementById('hide_modale_user');
 let part_right = document.getElementById('part_right');
 let tableaux_exp =document.getElementById('tableaux_exp');
 let member_to_room = document.querySelectorAll('.add_member');
-let show_members = document.querySelectorAll('.show_members');
+let show_members = document.getElementById('show_members'); // Use ID instead of class
 let close_users_room = document.getElementById('close_users_room');
+let details_btn = document.querySelectorAll('.details_user');
+let modifier_user = document.querySelectorAll('.modifier_user');
+let tab_users = JSON.parse(localStorage.getItem('staff')) || [];
+let modal_btns = document.getElementById('modal_btns');
+let update_user = document.getElementById('update_user');
+
 
 console.log(show_members)
 /* Affichage et désaffichage du formulaire de staff :*/
@@ -35,6 +41,7 @@ add_worker_btn.addEventListener('click', ()=>{
 remove_btn.addEventListener('click', ()=>{
     modale.classList.remove("open");
     suucces_btn.style.display = 'none';
+    resetForm();
 });
 
 
@@ -62,131 +69,120 @@ add_experience.addEventListener('click', (event)=>{
 });
 
 
-rmv_experience.addEventListener('click', ()=>{
+rmv_experience.addEventListener('click', (e)=>{
+    e.preventDefault();
     experi.value = '';
     s_date.value = '';
     end_date.value = '';
 });
 
-let tab_users;
 
-if(localStorage.staff != null){
-    tab_users = JSON.parse(localStorage.staff);
-}
-else{
-    tab_users = [];
-}
+
 
 
 /* Ajouter un staff depuis le formulaire : */
+/* Ajouter un staff depuis le formulaire : */
 add_btn.addEventListener('click', ()=>{
-    // const f_name_v = f_name.value;
-    // const worker_img_v = worker_img.value;
-    // const role_v = role.value;
-    // const worker_email_v = worker_email.value;
-    // const worker_phone_v = worker_phone.value;
-
-
-  
-    //         do{
-    //             f_name.style.border = '1px solid red';  
-    //         }while((f_name_v === ''));
-    //         do{
-    //              worker_img.style.border = '1px solid red';
-    //             alert('Enter your image url !');
-    //         }while(worker_img_v === '');
-
-    //         do{
-    //              role.style.border = '1px solid red';
-    //             alert('Choose your role !');
-    //         }while((role_v === ''));
-    //         do {
-    //              worker_email.style.border = '1px solid red';
-    //             alert('Enter your Email !');
-    //         }while(worker_email_v.value === '');
-    //          do{
-    //              worker_phone.style.border = '1px solid red';
-    //             alert('Enter your Phone number !');
-    //         }while(worker_phone_v === '');
-
-
-   
-            let staff = {
-            nom : f_name.value,
-            img : worker_img.value,
-            role : role.value,
-            email : worker_email.value,
-            phone : worker_phone.value,
-            experience : tableaux_experiences,
-            location : worker_local.value,
+    let staff = {
+        nom : f_name.value,
+        img : worker_img.value,
+        role : role.value,
+        email : worker_email.value,
+        phone : worker_phone.value,
+        experience : tableaux_experiences,
+        location : worker_local.value,
+    }
+    
+    tab_users.push(staff);
+    localStorage.setItem('staff' , JSON.stringify(tab_users));
+    
+    suucces_btn.style.display = 'block';
+    
+    // Store the current staff index for correct details display
+    const staffIndex = tab_users.length - 1;
+    
+    const staffHTML = `<div class="part_users_added">
+                <div class="user_photo">
+                    <img src="imgs/profile.png" alt="">
+                </div>
+                <h3>${staff.nom}</h3>
+                <p>${staff.role}</p>
+                <button class="details_user" data-index="${staffIndex}">Details</button>
+                <button class="modifier_user" data-index="${staffIndex}">1</button>
+            </div>`;
+    part_right.insertAdjacentHTML('beforeend', staffHTML);
             
-        }
-        
-        tab_users.push(staff);
-        localStorage.setItem('staff' , JSON.stringify(tab_users));
-        
-
-        suucces_btn.style.display = 'block';
-        part_right.innerHTML += `<div class="part_users_added">
-                    <div class="user_photo">
-                        <img src="imgs/profile.png" alt="">
-                    </div>
-                    <h3>${staff.nom}</h3>
-                    <p>${staff.role}</p>
-                    <button class="details_user">Details</button>
-                </div>`
-        const details_user = document.querySelectorAll('.details_user');
-        
-
-/* Traitement d'affichage des infos de chaque staff :*/
-        details_user.forEach(button => {
-        button.addEventListener('click', ()=>{
-        modale_infos_user.classList.add('open');
-        modale_infos_user.innerHTML = `<button class="hide_modale_user" id="hide_modale_user">x</button>
-        <div class="head_cv">
-            <div class="left_side_cv">
-            <img src="${staff.img}" alt="">
+    let details_user = document.querySelectorAll('.details_user');
+    
+    /* Traitement d'affichage des infos de chaque staff :*/
+    details_user.forEach(details_btn => {
+        details_btn.addEventListener('click', function(){
+            // Get the correct staff index from data attribute
+            const index = this.getAttribute('data-index');
+            const currentStaff = tab_users[index];
+            
+            modale_infos_user.classList.add('open');
+            modale_infos_user.innerHTML = `<button class="hide_modale_user" id="hide_modale_user">x</button>
+            <div class="head_cv">
+                <div class="left_side_cv">
+                <img src="${currentStaff.img}" alt="">
+                </div>
+            <div class="right_side_cv">
+                <div class="first_side">
+                <div><span>Nom : </span>${currentStaff.nom}</div>
+                <div><span>Role : </span>${currentStaff.role}</div>
+                <div><span>Email : </span>${currentStaff.email}</div>
+                </div>
+                <div class="second_side">
+                    <div><span>Phone : </span>${currentStaff.phone}</div>
+                    <div><span>Location : </span>${currentStaff.location}</div>
+                </div>
             </div>
-        <div class="right_side_cv">
-            <div class="first_side">
-            <div><span>Nom : </span>${staff.nom}</div>
-            <div><span>Role : </span>${staff.role}</div>
-            <div><span>Email : </span>${staff.email}</div>
             </div>
-            <div class="second_side">
-                <div><span>Phone : </span>${staff.phone}</div>
-                <div><span>Location : </span>${staff.location}</div>
-            </div>
-        </div>
-        </div>
-        <div class="table_exp">
-            <h2>Experiences :</h2>
-            <table id="tableaux_exp">
-                <tr>
-                    <th>Experience</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                </tr>
-                <tr>
-                    <td>${staff.experience[0].experience}</td>
-                    <td>${staff.experience[0].start_date}</td>
-                    <td>${staff.experience[0].end_date}</td>
-                </tr>
-            </table>
-        </div>`
+            <div class="table_exp">
+                <h2>Experiences :</h2>
+                <table id="tableaux_exp">
+                    <tr>
+                        <th>Experience</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                    ${currentStaff.experience.map(exp => `
+                        <tr>
+                            <td>${exp.experience}</td>
+                            <td>${exp.start_date}</td>
+                            <td>${exp.end_date}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            </div>`;
+            
+            // Add event listener for the newly created hide button
+            document.getElementById('hide_modale_user').addEventListener('click', ()=>{
+                modale_infos_user.classList.remove('open');
+            });
+        });
     });
-              hide_modale_user.addEventListener('click', ()=>{
-        modale_infos_user.classList.remove('open');
-});
-});
-        f_name.value ='';
-        worker_img.value = '';
-        role.value= '';
-        worker_email.value= '';
-        worker_phone.value= '';
-        experi.value= '';
-        s_date.value= '';
-        end_date.value= '';
+    
+    // réinisialisation des données :
+    f_name.value ='';
+    worker_img.value = '';
+    role.value= '';
+    worker_email.value= '';
+    worker_phone.value= '';
+    experi.value= '';
+    s_date.value= '';
+    end_date.value= '';
+    worker_local.value = ''; 
+    
+    // Réinisialiser le tableaux d'expériences :
+    tableaux_experiences = [];
+    
+    
+      setTimeout(() => {
+        modale.classList.remove("open");
+        suucces_btn.style.display = 'none'; // Also hide the success message
+    }, 500);
 });
 
 /* Affichage et désaffichage de menu :*/
@@ -200,8 +196,102 @@ hide_menu.addEventListener('click' , ()=>{
 member_to_room.forEach(button =>{
     button.addEventListener('click', ()=>{
         show_members.classList.add('affiche');
+        
+        show_members.insertAdjacentHTML('beforeend', );
     });
 });
 close_users_room.addEventListener('click', ()=>{
     show_members.classList.remove('affiche');
+});
+
+function resetForm() {
+    f_name.value = '';
+    worker_img.value = '';
+    role.value = '';
+    worker_email.value = '';
+    worker_phone.value = '';
+    experi.value = '';
+    s_date.value = '';
+    end_date.value = '';
+    worker_local.value = ''; 
+    tableaux_experiences = [];
+    
+    // Show add button and hide update button
+    add_btn.style.display = 'block';
+    const update_user = document.getElementById('update_user');
+    if (update_user) {
+        update_user.remove();
+    }
+}
+
+function updateStaffInUI(index, staff) {
+    const staffElements = document.querySelectorAll('.part_users_added');
+    if (staffElements[index]) {
+        const nameElement = staffElements[index].querySelector('h3');
+        const roleElement = staffElements[index].querySelector('p');
+        
+        if (nameElement) nameElement.textContent = staff.nom;
+        if (roleElement) roleElement.textContent = staff.role;
+    }
+}
+
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('modifier_user')) {
+        const index = e.target.getAttribute('data-index');
+        const staff = tab_users[index];
+        modale.classList.add('open');
+        // Fill the form with existing data
+        f_name.value = staff.nom;
+        worker_img.value = staff.img;
+        role.value = staff.role;
+        worker_email.value = staff.email;
+        worker_phone.value = staff.phone;
+        worker_local.value = staff.location;
+        
+        // Load experiences
+        tableaux_experiences = staff.experience || [];
+
+        add_btn.style.display = 'none';
+
+        
+
+      // Create update button if it doesn't exist
+            const temp = `<button id="update_user">Update</button>`;
+            modal_btns.insertAdjacentHTML('beforeend', temp);
+
+        
+        // Add event listener to update button
+        const update_user = document.getElementById('update_user');
+        update_user.addEventListener('click', function() {
+            // Create updated staff object
+            let updatedStaff = {
+                nom: f_name.value,
+                img: worker_img.value,
+                role: role.value,
+                email: worker_email.value,
+                phone: worker_phone.value,
+                experience: tableaux_experiences,
+                location: worker_local.value,
+            };
+            
+            // Update the staff in the array
+            tab_users[index] = updatedStaff;
+            localStorage.setItem('staff', JSON.stringify(tab_users));
+            
+            // Update the UI
+            updateStaffInUI(index, updatedStaff);
+            
+            // Show success message
+            suucces_btn.style.display = 'block';
+            suucces_btn.textContent = "Staff updated successfully!";
+            
+            // Reset form and close modal
+            resetForm();
+            setTimeout(() => {
+                modale.classList.remove("open");
+                suucces_btn.style.display = 'none';
+            }, 500);
+        });
+        add_btn.setAttribute('data-updating-index', index);
+    }
 });
