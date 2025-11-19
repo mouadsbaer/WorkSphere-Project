@@ -12,26 +12,7 @@
                             <h2>Salle de conférence</h2>
                             <button class="close_users_room" id="close_users_room">x</button>
                             <div class="users_container">
-                                <div class="staff_infos">
-                                <div class="staff_infos1">
-                                <img src="imgs/profile.png" alt="">
-                                </div>
-                                <div class="staff_infos2">
-                                <h3>Name</h3>
-                                <p>Poste</p>
-                                <button class="delete_user">x</button>
-                                </div>
-                            </div>
-                            <div class="staff_infos">
-                                <div class="staff_infos1">
-                                <img src="imgs/profile.png" alt="">
-                                </div>
-                                <div class="staff_infos2">
-                                <h3>Name</h3>
-                                <p>Poste</p>
-                                <button class="delete_user">x</button>
-                                </div>
-                            </div>
+                                
                             </div>
                         </div>
     <div class="modal" id="modale">
@@ -49,12 +30,16 @@
                     <option value="Développeur Front-end">Développeur Front-end</option>
                     <option value="Développeur Back-end">Développeur Back-end</option>
                     <option value="Manager">Manager</option>
-                    <option value="Récipionist">Récipionist</option>
+                    <option value="Réceptionnist(e)">Réceptionnist(e)</option>
+                    <option value="Technicien IT">Technicien IT</option>
+                    <option value="Agent de sécurité">Agent de sécurité</option>
+                    <option value="Nettoyage">Nettayage</option>
+
                 </select>
             </div>
             <div>
                 <label for="worker_img" class="label_img"> Photo (URL)</label>
-                <div class="prev_img"> <img src="imgs/profile.png" alt=""></div>
+                <div class="prev_img"> <img src="" alt="" id="previsualisation"></div>
                 <input type="text" placeholder="ex : https:://img12.jpg" id="worker_img">
             </div>
             <div>
@@ -227,34 +212,34 @@
                     <button id="add_rooms">Add room</button>
                 </div>
                 <div class="sections_room" id="sections_room">
-                    <div class="room">
+                    <div class="room" >
                         <p class="room_title">Salle de conférence</p>
                         <div class="zone">
-                        <button class="add_member">+</button>
+                        <button class="add_member" data-numero="1">+</button>
                         <p class="number_members">1/8</p>
                         </div>
                         
                     </div>
-                    <div class="room">
+                    <div class="room" >
                         <p class="room_title">Salle de Réception</p>
                         <div class="zone">
-                        <button class="add_member">+</button>
+                        <button class="add_member" data-numero="2">+</button>
                         <p class="number_members">1/8</p>
                         </div>
                         
                     </div>
-                    <div class="room">
+                    <div class="room" >
                         <p class="room_title">Salle des serveurs</p>
                         <div class="zone">
-                        <button class="add_member">+</button>
+                        <button class="add_member" data-numero="3">+</button>
                         <p class="number_members">1/8</p>
                         </div>
                         
                     </div>
-                    <div class="room">
+                    <div class="room" >
                         <p class="room_title">Salle de sécurité</p>
                         <div class="zone">
-                        <button class="add_member">+</button>
+                        <button class="add_member" data-numero="4">+</button>
                         <p class="number_members">1/8</p>
                         </div>
                         
@@ -262,7 +247,7 @@
                     <div class="room">
                         <p class="room_title">Salle d'archives</p>
                         <div class="zone">
-                        <button class="add_member">+</button>
+                        <button class="add_member" data-numero="5">+</button>
                         <p class="number_members">1/8</p>
                         </div>
                         
@@ -270,7 +255,7 @@
                     <div class="room">
                         <p class="room_title">Salle du personnel</p>
                         <div class="zone">
-                        <button class="add_member">+</button>
+                        <button class="add_member" data-numero="6">+</button>
                         <p class="number_members">1/8</p>
                         </div>
                         

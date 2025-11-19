@@ -30,13 +30,20 @@ let modifier_user = document.querySelectorAll('.modifier_user');
 let tab_users = JSON.parse(localStorage.getItem('staff')) || [];
 let modal_btns = document.getElementById('modal_btns');
 let update_user = document.getElementById('update_user');
+let tableaux_staff_unassigned = [];
+let previsualisation = document.getElementById('previsualisation');
 
-
-console.log(show_members)
 /* Affichage et désaffichage du formulaire de staff :*/
 add_worker_btn.addEventListener('click', ()=>{
     modale.classList.add("open");
-    
+    if(worker_img.value != ''){
+    worker_img.addEventListener('keyup', ()=>{
+    previsualisation.src=this.value;
+});
+}
+else{
+    previsualisation.src = "imgs/profile.png";
+}
 });
 remove_btn.addEventListener('click', ()=>{
     modale.classList.remove("open");
@@ -52,7 +59,7 @@ let tableaux_experiences =[];
 add_experience.addEventListener('click', (event)=>{
     event.preventDefault();
     if(experi.value === '' || s_date.value === '' || end_date.value === ''){
-        alert('all fields are required !')
+        alert('all fields are required !');
     }
     else{
         let experiences_user = {
@@ -77,10 +84,6 @@ rmv_experience.addEventListener('click', (e)=>{
 });
 
 
-
-
-
-/* Ajouter un staff depuis le formulaire : */
 /* Ajouter un staff depuis le formulaire : */
 add_btn.addEventListener('click', ()=>{
     let staff = {
@@ -94,11 +97,12 @@ add_btn.addEventListener('click', ()=>{
     }
     
     tab_users.push(staff);
+    tableaux_staff_unassigned.push(staff);
     localStorage.setItem('staff' , JSON.stringify(tab_users));
     
     suucces_btn.style.display = 'block';
     
-    // Store the current staff index for correct details display
+// Store the current staff index for correct details display
     const staffIndex = tab_users.length - 1;
     
     const staffHTML = `<div class="part_users_added">
@@ -111,6 +115,7 @@ add_btn.addEventListener('click', ()=>{
                 <button class="modifier_user" data-index="${staffIndex}">1</button>
             </div>`;
     part_right.insertAdjacentHTML('beforeend', staffHTML);
+    
             
     let details_user = document.querySelectorAll('.details_user');
     
@@ -194,10 +199,122 @@ hide_menu.addEventListener('click' , ()=>{
 });
 
 member_to_room.forEach(button =>{
-    button.addEventListener('click', ()=>{
+    button.addEventListener('click', (e)=>{
+        e.preventDefault();
+         const usersContainer = show_members.querySelector('.users_container');
+        usersContainer.innerHTML = '';
         show_members.classList.add('affiche');
-        
-        show_members.insertAdjacentHTML('beforeend', );
+        const j = parseInt(button.getAttribute('data-numero'));
+        if(j === 1){
+            for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
+                const users_acc = `<div class="staff_infos">
+                                <div class="staff_infos1">
+                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
+                                </div>
+                                <div class="staff_infos2">
+                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                <p>${tableaux_staff_unassigned[k].role}</p>
+                                <button class="delete_user">x</button>
+                                </div>
+                            </div>`
+                usersContainer.insertAdjacentHTML('beforeend', users_acc);
+            }
+        }
+        if(j === 2){
+            
+            for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
+                    if(tableaux_staff_unassigned[k].role === 'Réceptionnist(e)'){
+                const users_acc = `<div class="staff_infos">
+                                <div class="staff_infos1">
+                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
+                                </div>
+                                <div class="staff_infos2">
+                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                <p>${tableaux_staff_unassigned[k].role}</p>
+                                <button class="delete_user">x</button>
+                                </div>
+                            </div>`
+                usersContainer.insertAdjacentHTML('beforeend', users_acc);
+            
+                    }
+            }
+        }  
+        if(j === 3){
+           
+            for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
+                    if(tableaux_staff_unassigned[k].role === 'Technicien IT'){
+                const users_acc = `<div class="staff_infos">
+                                <div class="staff_infos1">
+                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
+                                </div>
+                                <div class="staff_infos2">
+                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                <p>${tableaux_staff_unassigned[k].role}</p>
+                                <button class="delete_user">x</button>
+                                </div>
+                            </div>`
+                usersContainer.insertAdjacentHTML('beforeend', users_acc);
+            
+                    }
+            }
+        }    
+        if(j === 4){
+            
+            for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
+                    if(tableaux_staff_unassigned[k].role === 'Agent de sécurité'){
+                const users_acc = `<div class="staff_infos">
+                                <div class="staff_infos1">
+                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
+                                </div>
+                                <div class="staff_infos2">
+                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                <p>${tableaux_staff_unassigned[k].role}</p>
+                                <button class="delete_user">x</button>
+                                </div>
+                            </div>`
+                usersContainer.insertAdjacentHTML('beforeend', users_acc);
+            
+                    }
+            }
+        }    
+        if(j === 5){
+            
+            for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
+                    if(tableaux_staff_unassigned[k].role === 'Manager' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Agent de sécurité' || tableaux_staff_unassigned[k].role === 'Développeur Back-end' || tableaux_staff_unassigned[k].role === 'Développeur Front-end' || tableaux_staff_unassigned[k].role === 'Nettoyage'){
+                const users_acc = `<div class="staff_infos">
+                                <div class="staff_infos1">
+                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
+                                </div>
+                                <div class="staff_infos2">
+                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                <p>${tableaux_staff_unassigned[k].role}</p>
+                                <button class="delete_user">x</button>
+                                </div>
+                            </div>`
+                usersContainer.insertAdjacentHTML('beforeend', users_acc);
+            
+                    }
+            }
+        }    
+        if(j === 6){
+            
+            for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
+                    if(tableaux_staff_unassigned[k].role === 'Manager' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Agent de sécurité' || tableaux_staff_unassigned[k].role === 'Développeur Back-end' || tableaux_staff_unassigned[k].role === 'Développeur Front-end'){
+                const users_acc = `<div class="staff_infos">
+                                <div class="staff_infos1">
+                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
+                                </div>
+                                <div class="staff_infos2">
+                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                <p>${tableaux_staff_unassigned[k].role}</p>
+                                <button class="delete_user">x</button>
+                                </div>
+                            </div>`
+                usersContainer.insertAdjacentHTML('beforeend', users_acc);
+            
+            }
+            }
+        } 
     });
 });
 close_users_room.addEventListener('click', ()=>{

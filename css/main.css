@@ -895,11 +895,12 @@ padding: 20px 10px;
     border-top-right-radius: 10px;
 }
 .show_members .staff_infos .staff_infos1{
-    width: 20%;
+    width: 30%;
+    
 }
 .show_members .staff_infos .staff_infos1 img{
-    width: 100%;
-    border-radius: 50%;
+    width: 150%;
+   
     box-shadow: 2px 2px 7px #2196F3;
 }
 .show_members .staff_infos{
@@ -913,6 +914,8 @@ padding: 20px 10px;
     margin: 10px;
     position: relative;
     background-color: #ffffff;
+    gap: 20px;
+    height: 60px;
 }
 .show_members .staff_infos .staff_infos2{
     display: flex;
@@ -1228,4 +1231,11 @@ padding: 20px 10px;
     .prev_img{
         width: 45%;
     }
+}
+
+
+.test{
+    width: 50px;
+    height: 50px;
+    background-color: red;
 }
