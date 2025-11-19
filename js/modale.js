@@ -32,6 +32,9 @@ let modal_btns = document.getElementById('modal_btns');
 let update_user = document.getElementById('update_user');
 let tableaux_staff_unassigned = [];
 let previsualisation = document.getElementById('previsualisation');
+let delete_user = document.getElementById('delete_user');
+let assign_user = document.querySelectorAll('.assign_user');
+let add_member_to_room = document.getElementById('add_member_to_room');
 
 /* Affichage et désaffichage du formulaire de staff :*/
 add_worker_btn.addEventListener('click', ()=>{
@@ -161,6 +164,7 @@ add_btn.addEventListener('click', ()=>{
                     `).join('')}
                 </table>
             </div>`;
+ 
             
             // Add event listener for the newly created hide button
             document.getElementById('hide_modale_user').addEventListener('click', ()=>{
@@ -215,6 +219,7 @@ member_to_room.forEach(button =>{
                                 <h3>${tableaux_staff_unassigned[k].nom}</h3>
                                 <p>${tableaux_staff_unassigned[k].role}</p>
                                 <button class="delete_user">x</button>
+                                <button class="assign_user" data_numb = "${k}">+</button>
                                 </div>
                             </div>`
                 usersContainer.insertAdjacentHTML('beforeend', users_acc);
@@ -232,6 +237,7 @@ member_to_room.forEach(button =>{
                                 <h3>${tableaux_staff_unassigned[k].nom}</h3>
                                 <p>${tableaux_staff_unassigned[k].role}</p>
                                 <button class="delete_user">x</button>
+                                <button class="assign_user" data_numb = "${k}">+</button>
                                 </div>
                             </div>`
                 usersContainer.insertAdjacentHTML('beforeend', users_acc);
@@ -251,6 +257,7 @@ member_to_room.forEach(button =>{
                                 <h3>${tableaux_staff_unassigned[k].nom}</h3>
                                 <p>${tableaux_staff_unassigned[k].role}</p>
                                 <button class="delete_user">x</button>
+                                <button class="assign_user" data_numb = "${k}">+</button>
                                 </div>
                             </div>`
                 usersContainer.insertAdjacentHTML('beforeend', users_acc);
@@ -270,6 +277,7 @@ member_to_room.forEach(button =>{
                                 <h3>${tableaux_staff_unassigned[k].nom}</h3>
                                 <p>${tableaux_staff_unassigned[k].role}</p>
                                 <button class="delete_user">x</button>
+                                <button class="assign_user" data_numb = "${k}">+</button>
                                 </div>
                             </div>`
                 usersContainer.insertAdjacentHTML('beforeend', users_acc);
@@ -289,6 +297,7 @@ member_to_room.forEach(button =>{
                                 <h3>${tableaux_staff_unassigned[k].nom}</h3>
                                 <p>${tableaux_staff_unassigned[k].role}</p>
                                 <button class="delete_user">x</button>
+                                <button class="assign_user" data_numb = "${k}">+</button>
                                 </div>
                             </div>`
                 usersContainer.insertAdjacentHTML('beforeend', users_acc);
@@ -308,13 +317,14 @@ member_to_room.forEach(button =>{
                                 <h3>${tableaux_staff_unassigned[k].nom}</h3>
                                 <p>${tableaux_staff_unassigned[k].role}</p>
                                 <button class="delete_user">x</button>
+                                <button class="assign_user" data_numb = "${k}">+</button>
                                 </div>
                             </div>`
                 usersContainer.insertAdjacentHTML('beforeend', users_acc);
-            
             }
             }
         } 
+
     });
 });
 close_users_room.addEventListener('click', ()=>{
@@ -411,4 +421,22 @@ document.addEventListener('click', function(e) {
         });
         add_btn.setAttribute('data-updating-index', index);
     }
-});
+});g
+        // assign_user.forEach(button =>{
+        //     button.addEventListener('click', (e)=>{
+        //         e.preventDefault();
+        //         const temp = parseInt(button.getAttribute('data_numb'));
+                
+        //             for(let k = 0; k<tableaux_staff_unassigned.length;i++){
+        //                 const div_member = `<div class="member">
+        //                         <div class="member_img"><img src="${tableaux_staff_unassigned[temp].img}" alt=""></div>
+        //                         <p class="p1">${tableaux_staff_unassigned[temp].nom}</p>
+        //                         <p class="p2">${tableaux_staff_unassigned[temp].role}</p>
+        //                         <button class="remove_member">x</button>
+        //                     </div>`;
+        //                     add_member_to_room.insertAdjacentHTML('beforeend', div_member);
+        //             }
+                    
+                
+        //     })
+        // });
