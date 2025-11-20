@@ -35,18 +35,67 @@ let previsualisation = document.getElementById('previsualisation');
 let delete_user = document.getElementById('delete_user');
 let assign_user = document.querySelectorAll('.assign_user');
 let add_member_to_room = document.getElementById('add_member_to_room');
+let container_cercle =document.getElementById('container_cercle');
+let cercle = document.getElementById('cercle');
+let global_container = document.getElementById('global_container');
+let assignedStaff = {
+    1: [], // Room 1 assigned staff
+    2: [], // Room 2 assigned staff  
+    3: [], // Room 3 assigned staff
+    4: [], // Room 4 assigned staff
+    5: [], // Room 5 assigned staff
+    6: []  // Room 6 assigned staff
+};
+
+cercle.style.left ='1px';
+
+container_cercle.addEventListener('click', ()=>{
+    
+    console.log(cercle.style.left);
+        if(cercle.style.left ==='1px'){
+            cercle.style.left ='20px';
+    cercle.style.background='#179bff';
+    document.body.classList.add('dark');
+    global_container.classList.add('dark');
+        }
+        else{
+            cercle.style.left ='1px';
+    cercle.style.background='#042137';
+    document.body.classList.remove('dark');
+    global_container.classList.remove('dark');
+        }
+ 
+});
 
 /* Affichage et désaffichage du formulaire de staff :*/
 add_worker_btn.addEventListener('click', ()=>{
     modale.classList.add("open");
-    if(worker_img.value != ''){
-    worker_img.addEventListener('keyup', ()=>{
-    previsualisation.src=this.value;
+    
+    // Set default image initially
+    previsualisation.src = "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
+    
+    // Reset the form image URL
+    worker_img.value = '';
 });
-}
-else{
-    previsualisation.src = "imgs/profile.png";
-}
+
+// Handle image URL input with default image fallback
+worker_img.addEventListener('keyup', function(){
+    if(this.value && this.value.trim() !== '') {
+        // If user entered a URL, use it
+        previsualisation.src = this.value;
+    } else {
+        // If input is empty, use default image
+        previsualisation.src = "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
+    }
+});
+
+// Also handle when the input loses focus (in case user pastes URL)
+worker_img.addEventListener('change', function(){
+    if(this.value && this.value.trim() !== '') {
+        previsualisation.src = this.value;
+    } else {
+        previsualisation.src = "imgs/profile.png";
+    }
 });
 remove_btn.addEventListener('click', ()=>{
     modale.classList.remove("open");
@@ -89,15 +138,22 @@ rmv_experience.addEventListener('click', (e)=>{
 
 /* Ajouter un staff depuis le formulaire : */
 add_btn.addEventListener('click', ()=>{
-    let staff = {
-        nom : f_name.value,
-        img : worker_img.value,
-        role : role.value,
-        email : worker_email.value,
-        phone : worker_phone.value,
-        experience : tableaux_experiences,
-        location : worker_local.value,
-    }
+    const staffImage = worker_img.value && worker_img.value.trim() !== '' 
+            ? worker_img.value 
+            : "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
+        
+        
+    
+    if(f_name.value != '' && worker_email.value != '' && worker_phone.value !='' && worker_local !=''){
+        let staff = {
+            nom : f_name.value,
+            img : staffImage,  // Use the determined image
+            role : role.value,
+            email : worker_email.value,
+            phone : worker_phone.value,
+            experience : tableaux_experiences,
+            location : worker_local.value,
+        }
     
     tab_users.push(staff);
     tableaux_staff_unassigned.push(staff);
@@ -110,7 +166,7 @@ add_btn.addEventListener('click', ()=>{
     
     const staffHTML = `<div class="part_users_added">
                 <div class="user_photo">
-                    <img src="imgs/profile.png" alt="">
+                    <img src="${staff.img || 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'}" alt="">
                 </div>
                 <h3>${staff.nom}</h3>
                 <p>${staff.role}</p>
@@ -173,7 +229,57 @@ add_btn.addEventListener('click', ()=>{
         });
     });
     
-    // réinisialisation des données :
+
+    
+    
+      
+    }
+    else{
+        if(f_name.value === ''){
+            f_name.style.border = '1px solid red';
+            alert('all field are required');
+            return;
+        }
+        if(role.value === ''){
+            role.style.border = '1px solid red';
+            f_name.style.border = '1px solid green';
+            alert('all field are required');
+            return;
+
+        }
+        
+        if(worker_email.value === ''){
+            worker_email.style.border = '1px solid red';
+            f_name.style.border = '1px solid green';
+            role.style.border = '1px solid green';
+
+            alert('all field are required');
+            return;
+
+        }
+        if(worker_phone.value === ''){
+            worker_email.style.border = '1px solid green';
+            f_name.style.border = '1px solid green';
+            worker_phone.style.border = '1px solid red';
+            alert('all field are required');
+            return;
+
+        }
+        if(worker_local.value === ''){
+            worker_email.style.border = '1px solid green';
+            f_name.style.border = '1px solid green';
+            worker_phone.style.border = '1px solid green';
+            worker_local.style.border = '1px solid red';
+            alert('all field are required');
+            
+
+        }
+        
+    }
+    if(!img_is_added){
+        worker_img.src = 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'
+    }
+        // réinisialisation des données :
     f_name.value ='';
     worker_img.value = '';
     role.value= '';
@@ -186,9 +292,7 @@ add_btn.addEventListener('click', ()=>{
     
     // Réinisialiser le tableaux d'expériences :
     tableaux_experiences = [];
-    
-    
-      setTimeout(() => {
+setTimeout(() => {
         modale.classList.remove("open");
         suucces_btn.style.display = 'none'; // Also hide the success message
     }, 500);
@@ -205,126 +309,167 @@ hide_menu.addEventListener('click' , ()=>{
 member_to_room.forEach(button =>{
     button.addEventListener('click', (e)=>{
         e.preventDefault();
-         const usersContainer = show_members.querySelector('.users_container');
+        const usersContainer = show_members.querySelector('.users_container');
         usersContainer.innerHTML = '';
         show_members.classList.add('affiche');
         const j = parseInt(button.getAttribute('data-numero'));
+        
+        // Store current room number for later use
+        usersContainer.setAttribute('data-current-room', j);
+        
+        // Get staff already assigned to this room
+        const roomAssignedStaff = assignedStaff[j] || [];
+        
         if(j === 1){
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
-                const users_acc = `<div class="staff_infos">
-                                <div class="staff_infos1">
-                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
-                                </div>
-                                <div class="staff_infos2">
-                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
-                                <p>${tableaux_staff_unassigned[k].role}</p>
-                                <button class="delete_user">x</button>
-                                <button class="assign_user" data_numb = "${k}">+</button>
-                                </div>
-                            </div>`
-                usersContainer.insertAdjacentHTML('beforeend', users_acc);
+                // Check if staff is NOT already assigned to this room
+                const isAssigned = roomAssignedStaff.some(assigned => 
+                    assigned.nom === tableaux_staff_unassigned[k].nom && 
+                    assigned.role === tableaux_staff_unassigned[k].role
+                );
+                
+                if (!isAssigned) {
+                    const users_acc = `<div class="staff_infos">
+                                    <div class="staff_infos1">
+                                    <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
+                                    </div>
+                                    <div class="staff_infos2">
+                                    <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                    <p>${tableaux_staff_unassigned[k].role}</p>
+                                    <button class="delete_user">x</button>
+                                    <button class="assign_user" data_numb = "${k}" data-room="${j}">+</button>
+                                    </div>
+                                </div>`;
+                    usersContainer.insertAdjacentHTML('beforeend', users_acc);
+                }
             }
         }
         if(j === 2){
-            
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
-                    if(tableaux_staff_unassigned[k].role === 'Réceptionnist(e)'){
-                const users_acc = `<div class="staff_infos">
-                                <div class="staff_infos1">
-                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
-                                </div>
-                                <div class="staff_infos2">
-                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
-                                <p>${tableaux_staff_unassigned[k].role}</p>
-                                <button class="delete_user">x</button>
-                                <button class="assign_user" data_numb = "${k}">+</button>
-                                </div>
-                            </div>`
-                usersContainer.insertAdjacentHTML('beforeend', users_acc);
-            
+                if(tableaux_staff_unassigned[k].role === 'Réceptionnist(e)'){
+                    const isAssigned = roomAssignedStaff.some(assigned => 
+                        assigned.nom === tableaux_staff_unassigned[k].nom && 
+                        assigned.role === tableaux_staff_unassigned[k].role
+                    );
+                    
+                    if (!isAssigned) {
+                        const users_acc = `<div class="staff_infos">
+                                        <div class="staff_infos1">
+                                        <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
+                                        </div>
+                                        <div class="staff_infos2">
+                                        <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                        <p>${tableaux_staff_unassigned[k].role}</p>
+                                        <button class="delete_user">x</button>
+                                        <button class="assign_user" data_numb = "${k}" data-room="${j}">+</button>
+                                        </div>
+                                    </div>`;
+                        usersContainer.insertAdjacentHTML('beforeend', users_acc);
                     }
+                }
             }
         }  
+        // Repeat the same pattern for rooms 3, 4, 5, 6...
         if(j === 3){
-           
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
-                    if(tableaux_staff_unassigned[k].role === 'Technicien IT'){
-                const users_acc = `<div class="staff_infos">
-                                <div class="staff_infos1">
-                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
-                                </div>
-                                <div class="staff_infos2">
-                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
-                                <p>${tableaux_staff_unassigned[k].role}</p>
-                                <button class="delete_user">x</button>
-                                <button class="assign_user" data_numb = "${k}">+</button>
-                                </div>
-                            </div>`
-                usersContainer.insertAdjacentHTML('beforeend', users_acc);
-            
+                if(tableaux_staff_unassigned[k].role === 'Technicien IT'){
+                    const isAssigned = roomAssignedStaff.some(assigned => 
+                        assigned.nom === tableaux_staff_unassigned[k].nom && 
+                        assigned.role === tableaux_staff_unassigned[k].role
+                    );
+                    
+                    if (!isAssigned) {
+                        const users_acc = `<div class="staff_infos">
+                                        <div class="staff_infos1">
+                                        <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
+                                        </div>
+                                        <div class="staff_infos2">
+                                        <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                        <p>${tableaux_staff_unassigned[k].role}</p>
+                                        <button class="delete_user">x</button>
+                                        <button class="assign_user" data_numb = "${k}" data-room="${j}">+</button>
+                                        </div>
+                                    </div>`;
+                        usersContainer.insertAdjacentHTML('beforeend', users_acc);
                     }
+                }
             }
         }    
         if(j === 4){
-            
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
-                    if(tableaux_staff_unassigned[k].role === 'Agent de sécurité'){
-                const users_acc = `<div class="staff_infos">
-                                <div class="staff_infos1">
-                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
-                                </div>
-                                <div class="staff_infos2">
-                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
-                                <p>${tableaux_staff_unassigned[k].role}</p>
-                                <button class="delete_user">x</button>
-                                <button class="assign_user" data_numb = "${k}">+</button>
-                                </div>
-                            </div>`
-                usersContainer.insertAdjacentHTML('beforeend', users_acc);
-            
+                if(tableaux_staff_unassigned[k].role === 'Agent de sécurité'){
+                    const isAssigned = roomAssignedStaff.some(assigned => 
+                        assigned.nom === tableaux_staff_unassigned[k].nom && 
+                        assigned.role === tableaux_staff_unassigned[k].role
+                    );
+                    
+                    if (!isAssigned) {
+                        const users_acc = `<div class="staff_infos">
+                                        <div class="staff_infos1">
+                                        <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
+                                        </div>
+                                        <div class="staff_infos2">
+                                        <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                        <p>${tableaux_staff_unassigned[k].role}</p>
+                                        <button class="delete_user">x</button>
+                                        <button class="assign_user" data_numb = "${k}" data-room="${j}">+</button>
+                                        </div>
+                                    </div>`;
+                        usersContainer.insertAdjacentHTML('beforeend', users_acc);
                     }
+                }
             }
         }    
         if(j === 5){
-            
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
-                    if(tableaux_staff_unassigned[k].role === 'Manager' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Agent de sécurité' || tableaux_staff_unassigned[k].role === 'Développeur Back-end' || tableaux_staff_unassigned[k].role === 'Développeur Front-end' || tableaux_staff_unassigned[k].role === 'Nettoyage'){
-                const users_acc = `<div class="staff_infos">
-                                <div class="staff_infos1">
-                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
-                                </div>
-                                <div class="staff_infos2">
-                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
-                                <p>${tableaux_staff_unassigned[k].role}</p>
-                                <button class="delete_user">x</button>
-                                <button class="assign_user" data_numb = "${k}">+</button>
-                                </div>
-                            </div>`
-                usersContainer.insertAdjacentHTML('beforeend', users_acc);
-            
+                if(tableaux_staff_unassigned[k].role === 'Manager' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Agent de sécurité' || tableaux_staff_unassigned[k].role === 'Développeur Back-end' || tableaux_staff_unassigned[k].role === 'Développeur Front-end' || tableaux_staff_unassigned[k].role === 'Nettoyage'){
+                    const isAssigned = roomAssignedStaff.some(assigned => 
+                        assigned.nom === tableaux_staff_unassigned[k].nom && 
+                        assigned.role === tableaux_staff_unassigned[k].role
+                    );
+                    
+                    if (!isAssigned) {
+                        const users_acc = `<div class="staff_infos">
+                                        <div class="staff_infos1">
+                                        <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
+                                        </div>
+                                        <div class="staff_infos2">
+                                        <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                        <p>${tableaux_staff_unassigned[k].role}</p>
+                                        <button class="delete_user">x</button>
+                                        <button class="assign_user" data_numb = "${k}" data-room="${j}">+</button>
+                                        </div>
+                                    </div>`;
+                        usersContainer.insertAdjacentHTML('beforeend', users_acc);
                     }
+                }
             }
         }    
         if(j === 6){
-            
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
-                    if(tableaux_staff_unassigned[k].role === 'Manager' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Agent de sécurité' || tableaux_staff_unassigned[k].role === 'Développeur Back-end' || tableaux_staff_unassigned[k].role === 'Développeur Front-end'){
-                const users_acc = `<div class="staff_infos">
-                                <div class="staff_infos1">
-                                <img src="${tableaux_staff_unassigned[k].img}" alt="">
-                                </div>
-                                <div class="staff_infos2">
-                                <h3>${tableaux_staff_unassigned[k].nom}</h3>
-                                <p>${tableaux_staff_unassigned[k].role}</p>
-                                <button class="delete_user">x</button>
-                                <button class="assign_user" data_numb = "${k}">+</button>
-                                </div>
-                            </div>`
-                usersContainer.insertAdjacentHTML('beforeend', users_acc);
+                if(tableaux_staff_unassigned[k].role === 'Manager' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Agent de sécurité' || tableaux_staff_unassigned[k].role === 'Développeur Back-end' || tableaux_staff_unassigned[k].role === 'Développeur Front-end'){
+                    const isAssigned = roomAssignedStaff.some(assigned => 
+                        assigned.nom === tableaux_staff_unassigned[k].nom && 
+                        assigned.role === tableaux_staff_unassigned[k].role
+                    );
+                    
+                    if (!isAssigned) {
+                        const users_acc = `<div class="staff_infos">
+                                        <div class="staff_infos1">
+                                        <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
+                                        </div>
+                                        <div class="staff_infos2">
+                                        <h3>${tableaux_staff_unassigned[k].nom}</h3>
+                                        <p>${tableaux_staff_unassigned[k].role}</p>
+                                        <button class="delete_user">x</button>
+                                        <button class="assign_user" data_numb = "${k}" data-room="${j}">+</button>
+                                        </div>
+                                    </div>`;
+                        usersContainer.insertAdjacentHTML('beforeend', users_acc);
+                    }
+                }
             }
-            }
-        } 
-
+        }
     });
 });
 close_users_room.addEventListener('click', ()=>{
@@ -421,22 +566,95 @@ document.addEventListener('click', function(e) {
         });
         add_btn.setAttribute('data-updating-index', index);
     }
-});g
-        // assign_user.forEach(button =>{
-        //     button.addEventListener('click', (e)=>{
-        //         e.preventDefault();
-        //         const temp = parseInt(button.getAttribute('data_numb'));
-                
-        //             for(let k = 0; k<tableaux_staff_unassigned.length;i++){
-        //                 const div_member = `<div class="member">
-        //                         <div class="member_img"><img src="${tableaux_staff_unassigned[temp].img}" alt=""></div>
-        //                         <p class="p1">${tableaux_staff_unassigned[temp].nom}</p>
-        //                         <p class="p2">${tableaux_staff_unassigned[temp].role}</p>
-        //                         <button class="remove_member">x</button>
-        //                     </div>`;
-        //                     add_member_to_room.insertAdjacentHTML('beforeend', div_member);
-        //             }
-                    
-                
-        //     })
-        // });
+});
+
+// Event delegation for assign_user buttons - ADD THIS AT THE END
+document.addEventListener('click', function(e) {
+    // Handle assign_user buttons
+    if (e.target.classList.contains('assign_user')) {
+        e.preventDefault();
+        const temp = parseInt(e.target.getAttribute('data_numb'));
+        const roomNumber = parseInt(e.target.getAttribute('data-room'));
+        
+        if (temp >= 0 && temp < tableaux_staff_unassigned.length) {
+            const staffToAssign = tableaux_staff_unassigned[temp];
+            
+            // Add to assigned staff for this room
+            if (!assignedStaff[roomNumber]) {
+                assignedStaff[roomNumber] = [];
+            }
+            assignedStaff[roomNumber].push(staffToAssign);
+            
+            // Create and add the member to the room
+            const div_member = `<div class="member">
+                <div class="member_img"><img src="${staffToAssign.img}" alt=""></div>
+                <p class="p1">${staffToAssign.nom}</p>
+                <p class="p2">${staffToAssign.role}</p>
+                <button class="remove_member" data-room="${roomNumber}">x</button>
+            </div>`;
+            add_member_to_room.insertAdjacentHTML('beforeend', div_member);
+            
+            // Remove from current view
+            const staffElement = e.target.closest('.staff_infos');
+            if (staffElement) {
+                staffElement.remove();
+            }
+        }
+    }
+    
+    // Handle remove_member buttons
+    if (e.target.classList.contains('remove_member')) {
+        e.preventDefault();
+        const roomNumber = parseInt(e.target.getAttribute('data-room'));
+        const memberElement = e.target.closest('.member');
+        if (memberElement) {
+            const staffName = memberElement.querySelector('.p1').textContent;
+            const staffRole = memberElement.querySelector('.p2').textContent;
+            
+            // Remove from assigned staff for this room
+            if (assignedStaff[roomNumber]) {
+                assignedStaff[roomNumber] = assignedStaff[roomNumber].filter(staff => 
+                    !(staff.nom === staffName && staff.role === staffRole)
+                );
+            }
+            
+            memberElement.remove();
+        }
+    }
+    
+    // Handle delete_user buttons (keep your existing code)
+    if (e.target.classList.contains('delete_user')) {
+        e.preventDefault();
+        
+        // Find the parent staff_infos element
+        const staffElement = e.target.closest('.staff_infos');
+        if (staffElement) {
+            // Get the staff name to find in the array
+            const staffName = staffElement.querySelector('h3').textContent;
+            const staffRole = staffElement.querySelector('p').textContent;
+            
+            // Remove from tableaux_staff_unassigned array
+            tableaux_staff_unassigned = tableaux_staff_unassigned.filter(staff => 
+                !(staff.nom === staffName && staff.role === staffRole)
+            );
+            
+            // Also remove from main tab_users array
+            tab_users = tab_users.filter(staff => 
+                !(staff.nom === staffName && staff.role === staffRole)
+            );
+            
+            // Remove from all assigned rooms
+            for (let room in assignedStaff) {
+                assignedStaff[room] = assignedStaff[room].filter(staff => 
+                    !(staff.nom === staffName && staff.role === staffRole)
+                );
+            }
+            
+            // Update localStorage
+            localStorage.setItem('staff', JSON.stringify(tab_users));
+            
+            // Remove the element from DOM
+            staffElement.remove();
+        }
+    }
+});

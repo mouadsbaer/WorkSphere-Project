@@ -327,15 +327,20 @@ padding: 20px 10px;
     width: 40px;
     height: 20px;
     border-radius: 10px;
+    position: relative;
 }
 .global_container .head_container .head_right_btns .container_cercle .cercle{
     width: 16px;
     height: 16px;
     background-color: #073F69;
     border-radius: 10px;
-    margin-top: 1px;
-    margin-left: 2px;
+
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    transition: .5s;
 }
+
 
 .global_container .head_container .head_right_btns .head_right_btns_icon2{
     background-color: #073F69;
@@ -1024,6 +1029,12 @@ padding: 20px 10px;
     font-size: 1.5vmin;
     text-align: center;
 }
+body.dark{
+    background-color: #0466C8;
+}
+.global_container.dark{
+    background-color: #042137;
+}
 
 @media screen and (max-width: 1023px) and (min-width: 768px){
     .back{
@@ -1290,18 +1301,16 @@ padding: 20px 10px;
         flex-wrap: wrap;
         gap: 20px;
     }
-    .modale_infos_user .table_exp table{
-        margin: 5px;
-        width: 50%;
-    }
+    
     .prev_img{
         width: 45%;
     }
-}
+    .modale_infos_user .table_exp table{
+        rotate: -90deg;
 
-
-.test{
-    width: 50px;
-    height: 50px;
-    background-color: red;
+        
+    }
+    .table_exp{
+            display: block;
+        }
 }
