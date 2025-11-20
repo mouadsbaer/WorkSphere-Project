@@ -171,7 +171,7 @@ add_btn.addEventListener('click', ()=>{
                 <h3>${staff.nom}</h3>
                 <p>${staff.role}</p>
                 <button class="details_user" data-index="${staffIndex}">Details</button>
-                <button class="modifier_user" data-index="${staffIndex}">1</button>
+                <button class="modifier_user" data-index="${staffIndex}"><i class='bxr  bx-pencil'  style='color:#000000'  ></i> </button>
             </div>`;
     part_right.insertAdjacentHTML('beforeend', staffHTML);
     
@@ -602,6 +602,7 @@ document.addEventListener('click', function(e) {
             if (staffElement) {
                 staffElement.remove();
             }
+            removeStaffFromUnassignedDisplay(staffName, staffRole);
         }
     }
     
@@ -661,3 +662,19 @@ document.addEventListener('click', function(e) {
         }
     }
 });
+
+// Helper function to remove staff from unassigned display
+function removeStaffFromUnassignedDisplay(staffName, staffRole) {
+    const staffElements = document.querySelectorAll('.part_users_added');
+    
+    staffElements.forEach(element => {
+        const nameElement = element.querySelector('h3');
+        const roleElement = element.querySelector('p');
+        
+        if (nameElement && roleElement && 
+            nameElement.textContent === staffName && 
+            roleElement.textContent === staffRole) {
+            element.remove();
+        }
+    });
+}
