@@ -276,9 +276,6 @@ add_btn.addEventListener('click', ()=>{
         }
         
     }
-    if(!img_is_added){
-        worker_img.src = 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'
-    }
         // réinisialisation des données :
     f_name.value ='';
     worker_img.value = '';
@@ -295,7 +292,11 @@ add_btn.addEventListener('click', ()=>{
 setTimeout(() => {
         modale.classList.remove("open");
         suucces_btn.style.display = 'none'; // Also hide the success message
-    }, 500);
+    }, 100);
+    if(!img_is_added){
+        worker_img.src = 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'
+    }
+    
 });
 
 /* Affichage et désaffichage de menu :*/
@@ -501,9 +502,11 @@ function updateStaffInUI(index, staff) {
     if (staffElements[index]) {
         const nameElement = staffElements[index].querySelector('h3');
         const roleElement = staffElements[index].querySelector('p');
+        const imgElement = staffElements[index].querySelector('img');
         
         if (nameElement) nameElement.textContent = staff.nom;
         if (roleElement) roleElement.textContent = staff.role;
+        if (imgElement) imgElement.src = staff.img;
     }
 }
 

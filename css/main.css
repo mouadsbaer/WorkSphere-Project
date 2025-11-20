@@ -902,11 +902,12 @@ padding: 20px 10px;
     border-top-right-radius: 10px;
 }
 .show_members .staff_infos .staff_infos1{
-    width: 30%;
+    width: 20%;
+    margin-left: 5px;
     
 }
 .show_members .staff_infos .staff_infos1 img{
-    width: 150%;
+    width: 100%;
    
     box-shadow: 2px 2px 7px #2196F3;
 }
