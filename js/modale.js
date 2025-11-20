@@ -112,8 +112,13 @@ let tableaux_experiences =[];
 
 add_experience.addEventListener('click', (event)=>{
     event.preventDefault();
-    if(experi.value === '' || s_date.value === '' || end_date.value === ''){
-        alert('all fields are required !');
+    if(experi.value === '' || s_date.value === '' || end_date.value === '' || s_date.value > end_date.value){
+        if(experi.value === '' || s_date.value === '' || end_date.value === '' ){
+            alert('all fields are required');
+        }
+        else if(s_date.value > end_date.value){
+            alert('verify the start date and the end date !');
+        }
     }
     else{
         let experiences_user = {
