@@ -1314,4 +1314,14 @@ body.dark{
     .table_exp{
             display: block;
         }
+        .add_member_to_room .member .p1{
+    color: #2887cf;
+    font-size: 1.2vmin;
+    text-align: center;
+}
+.add_member_to_room .member .p2{
+    color: #000000;
+    font-size: 1.5vmin;
+    text-align: center;
+}
 }
