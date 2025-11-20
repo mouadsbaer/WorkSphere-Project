@@ -46,7 +46,7 @@ let assignedStaff = {
     5: [], // Room 5 assigned staff
     6: []  // Room 6 assigned staff
 };
-
+let currentRoomNumber = null; // Track which room's add_member button was clicked
 let assignedStaffToRooms = []; // Track staff assigned to any room
 
 cercle.style.left ='1px';
@@ -325,17 +325,13 @@ member_to_room.forEach(button =>{
         
         if(j === 1){
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
-                // Check if staff is NOT already assigned to this room AND not assigned to any room globally
-                const isAssignedToThisRoom = roomAssignedStaff.some(assigned => 
-                    assigned.nom === tableaux_staff_unassigned[k].nom && 
-                    assigned.role === tableaux_staff_unassigned[k].role
-                );
-                const isAssignedGlobally = assignedStaffToRooms.some(assigned => 
+                // Check if staff is NOT already assigned to this room
+                const isAssigned = roomAssignedStaff.some(assigned => 
                     assigned.nom === tableaux_staff_unassigned[k].nom && 
                     assigned.role === tableaux_staff_unassigned[k].role
                 );
                 
-                if (!isAssignedToThisRoom && !isAssignedGlobally) {
+                if (!isAssigned) {
                     const users_acc = `<div class="staff_infos">
                                     <div class="staff_infos1">
                                     <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
@@ -354,16 +350,12 @@ member_to_room.forEach(button =>{
         if(j === 2){
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
                 if(tableaux_staff_unassigned[k].role === 'Réceptionnist(e)'){
-                    const isAssignedToThisRoom = roomAssignedStaff.some(assigned => 
-                        assigned.nom === tableaux_staff_unassigned[k].nom && 
-                        assigned.role === tableaux_staff_unassigned[k].role
-                    );
-                    const isAssignedGlobally = assignedStaffToRooms.some(assigned => 
+                    const isAssigned = roomAssignedStaff.some(assigned => 
                         assigned.nom === tableaux_staff_unassigned[k].nom && 
                         assigned.role === tableaux_staff_unassigned[k].role
                     );
                     
-                    if (!isAssignedToThisRoom && !isAssignedGlobally) {
+                    if (!isAssigned) {
                         const users_acc = `<div class="staff_infos">
                                         <div class="staff_infos1">
                                         <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
@@ -379,21 +371,17 @@ member_to_room.forEach(button =>{
                     }
                 }
             }
-        }
+        }  
         // Repeat the same pattern for rooms 3, 4, 5, 6...
         if(j === 3){
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
                 if(tableaux_staff_unassigned[k].role === 'Technicien IT'){
-                    const isAssignedToThisRoom = roomAssignedStaff.some(assigned => 
-                        assigned.nom === tableaux_staff_unassigned[k].nom && 
-                        assigned.role === tableaux_staff_unassigned[k].role
-                    );
-                    const isAssignedGlobally = assignedStaffToRooms.some(assigned => 
+                    const isAssigned = roomAssignedStaff.some(assigned => 
                         assigned.nom === tableaux_staff_unassigned[k].nom && 
                         assigned.role === tableaux_staff_unassigned[k].role
                     );
                     
-                    if (!isAssignedToThisRoom && !isAssignedGlobally) {
+                    if (!isAssigned) {
                         const users_acc = `<div class="staff_infos">
                                         <div class="staff_infos1">
                                         <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
@@ -409,20 +397,16 @@ member_to_room.forEach(button =>{
                     }
                 }
             }
-        }
+        }    
         if(j === 4){
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
                 if(tableaux_staff_unassigned[k].role === 'Agent de sécurité'){
-                    const isAssignedToThisRoom = roomAssignedStaff.some(assigned => 
-                        assigned.nom === tableaux_staff_unassigned[k].nom && 
-                        assigned.role === tableaux_staff_unassigned[k].role
-                    );
-                    const isAssignedGlobally = assignedStaffToRooms.some(assigned => 
+                    const isAssigned = roomAssignedStaff.some(assigned => 
                         assigned.nom === tableaux_staff_unassigned[k].nom && 
                         assigned.role === tableaux_staff_unassigned[k].role
                     );
                     
-                    if (!isAssignedToThisRoom && !isAssignedGlobally) {
+                    if (!isAssigned) {
                         const users_acc = `<div class="staff_infos">
                                         <div class="staff_infos1">
                                         <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
@@ -438,20 +422,16 @@ member_to_room.forEach(button =>{
                     }
                 }
             }
-        }
+        }    
         if(j === 5){
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
                 if(tableaux_staff_unassigned[k].role === 'Manager' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Agent de sécurité' || tableaux_staff_unassigned[k].role === 'Développeur Back-end' || tableaux_staff_unassigned[k].role === 'Développeur Front-end' || tableaux_staff_unassigned[k].role === 'Nettoyage'){
-                    const isAssignedToThisRoom = roomAssignedStaff.some(assigned => 
-                        assigned.nom === tableaux_staff_unassigned[k].nom && 
-                        assigned.role === tableaux_staff_unassigned[k].role
-                    );
-                    const isAssignedGlobally = assignedStaffToRooms.some(assigned => 
+                    const isAssigned = roomAssignedStaff.some(assigned => 
                         assigned.nom === tableaux_staff_unassigned[k].nom && 
                         assigned.role === tableaux_staff_unassigned[k].role
                     );
                     
-                    if (!isAssignedToThisRoom && !isAssignedGlobally) {
+                    if (!isAssigned) {
                         const users_acc = `<div class="staff_infos">
                                         <div class="staff_infos1">
                                         <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
@@ -467,20 +447,16 @@ member_to_room.forEach(button =>{
                     }
                 }
             }
-        }
+        }    
         if(j === 6){
             for(let k = 0 ; k<tableaux_staff_unassigned.length; k++){
                 if(tableaux_staff_unassigned[k].role === 'Manager' || tableaux_staff_unassigned[k].role === 'Réceptionnist(e)' || tableaux_staff_unassigned[k].role === 'Technicien IT' || tableaux_staff_unassigned[k].role === 'Agent de sécurité' || tableaux_staff_unassigned[k].role === 'Développeur Back-end' || tableaux_staff_unassigned[k].role === 'Développeur Front-end'){
-                    const isAssignedToThisRoom = roomAssignedStaff.some(assigned => 
-                        assigned.nom === tableaux_staff_unassigned[k].nom && 
-                        assigned.role === tableaux_staff_unassigned[k].role
-                    );
-                    const isAssignedGlobally = assignedStaffToRooms.some(assigned => 
+                    const isAssigned = roomAssignedStaff.some(assigned => 
                         assigned.nom === tableaux_staff_unassigned[k].nom && 
                         assigned.role === tableaux_staff_unassigned[k].role
                     );
                     
-                    if (!isAssignedToThisRoom && !isAssignedGlobally) {
+                    if (!isAssigned) {
                         const users_acc = `<div class="staff_infos">
                                         <div class="staff_infos1">
                                         <img src="${tableaux_staff_unassigned[k].img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
@@ -598,6 +574,7 @@ document.addEventListener('click', function(e) {
 });
 
 // Event delegation for assign_user buttons - ADD THIS AT THE END
+// Event delegation for assign_user buttons - ADD THIS AT THE END
 document.addEventListener('click', function(e) {
     // Handle assign_user buttons
     if (e.target.classList.contains('assign_user')) {
@@ -658,6 +635,9 @@ document.addEventListener('click', function(e) {
                 !(staff.nom === staffName && staff.role === staffRole)
             );
             
+            // Add the staff back to the unassigned staff display in part_right
+            addStaffToUnassignedDisplay(staffName, staffRole);
+            
             memberElement.remove();
         }
     }
@@ -716,4 +696,139 @@ function removeStaffFromUnassignedDisplay(staffName, staffRole) {
             element.remove();
         }
     });
+}
+
+// Helper function to add staff back to unassigned display
+function addStaffToUnassignedDisplay(staffName, staffRole) {
+    // Find the staff in tableaux_staff_unassigned
+    const staff = tableaux_staff_unassigned.find(staff => 
+        staff.nom === staffName && staff.role === staffRole
+    );
+    
+    if (staff) {
+        // Find the correct index in tab_users
+        const staffIndex = tab_users.findIndex(s => 
+            s.nom === staffName && s.role === staffRole
+        );
+        
+        if (staffIndex !== -1) {
+            // Create the staff HTML element
+            const staffHTML = `<div class="part_users_added">
+                <div class="user_photo">
+                    <img src="${staff.img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
+                </div>
+                <h3>${staff.nom}</h3>
+                <p>${staff.role}</p>
+                <button class="details_user" data-index="${staffIndex}">Details</button>
+                <button class="modifier_user" data-index="${staffIndex}"><i class='bxr  bx-pencil'  style='color:#000000'  ></i> </button>
+            </div>`;
+            
+            // Add to the unassigned staff display
+            part_right.insertAdjacentHTML('beforeend', staffHTML);
+            
+            // Re-attach event listeners to the new buttons
+            attachEventListenersToNewStaff();
+        }
+    }
+}
+
+// Helper function to attach event listeners to newly added staff
+function attachEventListenersToNewStaff() {
+    // Re-attach details_user event listeners
+    const details_user = document.querySelectorAll('.details_user');
+    details_user.forEach(details_btn => {
+        details_btn.addEventListener('click', function(){
+            const index = this.getAttribute('data-index');
+            const currentStaff = tab_users[index];
+            
+            modale_infos_user.classList.add('open');
+            modale_infos_user.innerHTML = `<button class="hide_modale_user" id="hide_modale_user">x</button>
+            <div class="head_cv">
+                <div class="left_side_cv">
+                <img src="${currentStaff.img}" alt="">
+                </div>
+            <div class="right_side_cv">
+                <div class="first_side">
+                <div><span>Nom : </span>${currentStaff.nom}</div>
+                <div><span>Role : </span>${currentStaff.role}</div>
+                <div><span>Email : </span>${currentStaff.email}</div>
+                </div>
+                <div class="second_side">
+                    <div><span>Phone : </span>${currentStaff.phone}</div>
+                    <div><span>Location : </span>${currentStaff.location}</div>
+                </div>
+            </div>
+            </div>
+            <div class="table_exp">
+                <h2>Experiences :</h2>
+                <table id="tableaux_exp">
+                    <tr>
+                        <th>Experience</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                    ${currentStaff.experience.map(exp => `
+                        <tr>
+                            <td>${exp.experience}</td>
+                            <td>${exp.start_date}</td>
+                            <td>${exp.end_date}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            </div>`;
+ 
+            document.getElementById('hide_modale_user').addEventListener('click', ()=>{
+                modale_infos_user.classList.remove('open');
+            });
+        });
+    });
+}
+
+// Helper function to remove staff from unassigned display
+function removeStaffFromUnassignedDisplay(staffName, staffRole) {
+    const staffElements = document.querySelectorAll('.part_users_added');
+    
+    staffElements.forEach(element => {
+        const nameElement = element.querySelector('h3');
+        const roleElement = element.querySelector('p');
+        
+        if (nameElement && roleElement && 
+            nameElement.textContent === staffName && 
+            roleElement.textContent === staffRole) {
+            element.remove();
+        }
+    });
+}
+// Helper function to add staff back to unassigned display
+function addStaffToUnassignedDisplay(staffName, staffRole) {
+    // Find the staff in tableaux_staff_unassigned
+    const staff = tableaux_staff_unassigned.find(staff => 
+        staff.nom === staffName && staff.role === staffRole
+    );
+    
+    if (staff) {
+        // Find the correct index in tab_users
+        const staffIndex = tab_users.findIndex(s => 
+            s.nom === staffName && s.role === staffRole
+        );
+        
+        if (staffIndex !== -1) {
+            // Create the staff HTML element
+            const staffHTML = `<div class="part_users_added">
+                <div class="user_photo">
+                    <img src="${staff.img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
+                </div>
+                <h3>${staff.nom}</h3>
+                <p>${staff.role}</p>
+                <button class="details_user" data-index="${staffIndex}">Details</button>
+                <button class="modifier_user" data-index="${staffIndex}"><i class='bxr  bx-pencil'  style='color:#000000'  ></i> </button>
+            </div>`;
+            
+            // Add to the unassigned staff display
+            part_right.insertAdjacentHTML('beforeend', staffHTML);
+            
+            // Re-attach event listeners to the new buttons
+            attachEventListenersToNewStaff();
+        }
+    }
 }
