@@ -499,11 +499,14 @@ document.addEventListener('click', function (e) {
         tableaux_experiences = staff.experience || [];
         add_btn.style.display = 'none';
 
+        // Ajouter update button
         const temp = `<button id="update_user">Update</button>`;
         modal_btns.insertAdjacentHTML('beforeend', temp);
 
+        // ajouter événement à update button
         const update_user = document.getElementById('update_user');
         update_user.addEventListener('click', function () {
+            // Create updated staff object
             let updatedStaff = {
                 nom: f_name.value,
                 img: worker_img.value,
@@ -514,13 +517,38 @@ document.addEventListener('click', function (e) {
                 location: worker_local.value,
             };
 
+            // mise à jour les informations de staff dans le tableaux
             tab_users[index] = updatedStaff;
             localStorage.setItem('staff', JSON.stringify(tab_users));
-            updateStaffInUI(index, updatedStaff);
 
+            // Update the staff in part_right
+            updateStaffInPartRight(index, updatedStaff);
+
+            // Update in unassigned staff array if exists
+            const unassignedIndex = tableaux_staff_unassigned.findIndex(staff => 
+                staff.nom === staff.nom && staff.role === staff.role
+            );
+            if (unassignedIndex !== -1) {
+                tableaux_staff_unassigned[unassignedIndex] = updatedStaff;
+            }
+
+            // Update in assigned staff arrays
+            for (let roomNumber = 1; roomNumber <= 6; roomNumber++) {
+                if (assignedStaff[roomNumber]) {
+                    const assignedIndex = assignedStaff[roomNumber].findIndex(staff => 
+                        staff.nom === staff.nom && staff.role === staff.role
+                    );
+                    if (assignedIndex !== -1) {
+                        assignedStaff[roomNumber][assignedIndex] = updatedStaff;
+                    }
+                }
+            }
+
+            // afficher le message de succées
             suucces_btn.style.display = 'block';
             suucces_btn.textContent = "Staff updated successfully!";
 
+            // vider le formulaire et fermer le modale
             resetForm();
             setTimeout(() => {
                 modale.classList.remove("open");
@@ -530,6 +558,7 @@ document.addEventListener('click', function (e) {
         add_btn.setAttribute('data-updating-index', index);
     }
 });
+
 
 // Vérification si la salle atteind sa capacité
 function isRoomFull(roomNumber) {
