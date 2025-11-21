@@ -1,3 +1,5 @@
+let search_input = document.getElementById('search_input');
+let search_zone = document.getElementById('search_zone');
 /*============================================================================ Ajouter un staff depuis le formulaire :================================================================== */
 add_btn.addEventListener('click', () => {
     const staffImage = worker_img.value && worker_img.value.trim() !== ''
@@ -136,5 +138,51 @@ add_btn.addEventListener('click', () => {
     }, 100);
     if (!img_is_added) {
         worker_img.src = 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'
+    }
+});
+
+
+document.addEventListener('click', function(e) {
+    // cacher la zone de recherche s'il y a un click 
+    if (!search_zone.contains(e.target) && e.target !== search_input) {
+        search_zone.style.display = 'none';
+    }
+});
+
+search_input.addEventListener('keyup', () => {
+    const searchValue = search_input.value.trim().toLowerCase();
+    
+    // Vider la zone 
+    search_zone.innerHTML = '';
+    
+    // cacher la zone de recherche s'elle est vide
+    if (searchValue === '') {
+        search_zone.style.display = "none";
+        return;
+    }
+    
+    let foundAny = false;
+    
+    for(let i = 0; i < tab_users.length; i++) {
+        const userName = tab_users[i].nom.toLowerCase();
+        const role_staff = tab_users[i].role.toLowerCase(); 
+        
+        if(userName.includes(searchValue) || role_staff.includes(searchValue)) {
+            const founded = `<div class="results">
+                    <div class="img_founded"><img src="${tab_users[i].img}" alt=""></div>
+                    <p class="n">${tab_users[i].nom}</p>
+                    <p class="r">${tab_users[i].role}</p>
+                </div>`;
+            search_zone.insertAdjacentHTML('beforeend', founded);
+            foundAny = true;
+        }
+    }
+    
+    search_zone.style.display = foundAny ? "block" : "none";
+    
+    // si l'utilisateur n'a pas été trouvé
+    if (!foundAny) {
+        search_zone.innerHTML = '<p class="no-results">No users found</p>';
+        search_zone.style.display = "block";
     }
 });

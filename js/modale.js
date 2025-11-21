@@ -76,6 +76,7 @@ container_cercle.addEventListener('click', () => {
         cercle.style.background = '#042137';
         document.body.classList.remove('dark');
         global_container.classList.remove('dark');
+        search_zone.classList.add('dark');
     }
 });
 
@@ -351,6 +352,7 @@ document.addEventListener('click', function (e) {
         const staff = tab_users[index];
         modale.classList.add('open');
         f_name.value = staff.nom;
+
         worker_img.value = staff.img;
         role.value = staff.role;
         worker_email.value = staff.email;
