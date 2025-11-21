@@ -51,7 +51,7 @@ let assignedStaffToRooms = [];
 let staff_nbr = document.querySelectorAll('.staff_nbr');
 let staff_max = document.querySelectorAll('.staff_max');
 
-// Define maximum staff for each room
+
 const roomMaxStaff = {
     1: 4,
     2: 3,
@@ -60,7 +60,6 @@ const roomMaxStaff = {
     5: 6,
     6: 5
 };
-
 
 cercle.style.left = '1px';
 
@@ -144,146 +143,7 @@ rmv_experience.addEventListener('click', (e) => {
     end_date.value = '';
 });
 
-/*============================================================================ Ajouter un staff depuis le formulaire :================================================================== */
-add_btn.addEventListener('click', () => {
-    const staffImage = worker_img.value && worker_img.value.trim() !== ''
-        ? worker_img.value
-        : "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
 
-    if (f_name.value != '' && worker_email.value != '' && worker_phone.value != '' && worker_local != '') {
-        let staff = {
-            nom: f_name.value,
-            img: staffImage,
-            role: role.value,
-            email: worker_email.value,
-            phone: worker_phone.value,
-            experience: tableaux_experiences,
-            location: worker_local.value,
-        }
-
-        tab_users.push(staff);
-        tableaux_staff_unassigned.push(staff);
-        localStorage.setItem('staff', JSON.stringify(tab_users));
-
-        suucces_btn.style.display = 'block';
-
-        const staffIndex = tab_users.length - 1;
-
-        const staffHTML = `<div class="part_users_added">
-                <div class="user_photo">
-                    <img src="${staff.img || 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'}" alt="">
-                </div>
-                <h3>${staff.nom}</h3>
-                <p>${staff.role}</p>
-                <button class="details_user" data-index="${staffIndex}">Details</button>
-                <button class="modifier_user" data-index="${staffIndex}"><i class='bxr  bx-pencil'  style='color:#000000'  ></i> </button>
-            </div>`;
-        part_right.insertAdjacentHTML('beforeend', staffHTML);
-
-        let details_user = document.querySelectorAll('.details_user');
-
-        details_user.forEach(details_btn => {
-            details_btn.addEventListener('click', function () {
-                const index = this.getAttribute('data-index');
-                const currentStaff = tab_users[index];
-
-                modale_infos_user.classList.add('open');
-                modale_infos_user.innerHTML = `<button class="hide_modale_user" id="hide_modale_user">x</button>
-            <div class="head_cv">
-                <div class="left_side_cv">
-                <img src="${currentStaff.img}" alt="">
-                </div>
-            <div class="right_side_cv">
-                <div class="first_side">
-                <div><span>Nom : </span>${currentStaff.nom}</div>
-                <div><span>Role : </span>${currentStaff.role}</div>
-                <div><span>Email : </span>${currentStaff.email}</div>
-                </div>
-                <div class="second_side">
-                    <div><span>Phone : </span>${currentStaff.phone}</div>
-                    <div><span>Location : </span>${currentStaff.location}</div>
-                </div>
-            </div>
-            </div>
-            <div class="table_exp">
-                <h2>Experiences :</h2>
-                <table id="tableaux_exp">
-                    <tr>
-                        <th>Experience</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                    </tr>
-                    ${currentStaff.experience.map(exp => `
-                        <tr>
-                            <td>${exp.experience}</td>
-                            <td>${exp.start_date}</td>
-                            <td>${exp.end_date}</td>
-                        </tr>
-                    `).join('')}
-                </table>
-            </div>`;
-
-                document.getElementById('hide_modale_user').addEventListener('click', () => {
-                    modale_infos_user.classList.remove('open');
-                });
-            });
-        });
-    }
-    else {
-        if (f_name.value === '') {
-            f_name.style.border = '1px solid red';
-            alert('all field are required');
-            return;
-        }
-        if (role.value === '') {
-            role.style.border = '1px solid red';
-            f_name.style.border = '1px solid green';
-            alert('all field are required');
-            return;
-        }
-
-        if (worker_email.value === '') {
-            worker_email.style.border = '1px solid red';
-            f_name.style.border = '1px solid green';
-            role.style.border = '1px solid green';
-            alert('all field are required');
-            return;
-
-        }
-        if (worker_phone.value === '') {
-            worker_email.style.border = '1px solid green';
-            f_name.style.border = '1px solid green';
-            worker_phone.style.border = '1px solid red';
-            alert('all field are required');
-            return;
-        }
-        if (worker_local.value === '') {
-            worker_email.style.border = '1px solid green';
-            f_name.style.border = '1px solid green';
-            worker_phone.style.border = '1px solid green';
-            worker_local.style.border = '1px solid red';
-            alert('all field are required');
-        }
-    }
-    f_name.value = '';
-    worker_img.value = '';
-    role.value = '';
-    worker_email.value = '';
-    worker_phone.value = '';
-    experi.value = '';
-    s_date.value = '';
-    end_date.value = '';
-    worker_local.value = '';
-
-    tableaux_experiences = [];
-    setTimeout(() => {
-        modale.classList.remove("open");
-        suucces_btn.style.display = 'none';
-    }, 100);
-    if (!img_is_added) {
-        worker_img.src = 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'
-    }
-});
 
 /* ===================================================== Affichage et désaffichage de menu : ========================================================*/
 show_menu.addEventListener('click', () => {
@@ -499,6 +359,12 @@ document.addEventListener('click', function (e) {
         tableaux_experiences = staff.experience || [];
         add_btn.style.display = 'none';
 
+        
+        const existingUpdateBtn = document.getElementById('update_user');
+        if (existingUpdateBtn) {
+            existingUpdateBtn.remove();
+        }
+
         // Ajouter update button
         const temp = `<button id="update_user">Update</button>`;
         modal_btns.insertAdjacentHTML('beforeend', temp);
@@ -506,10 +372,13 @@ document.addEventListener('click', function (e) {
         // ajouter événement à update button
         const update_user = document.getElementById('update_user');
         update_user.addEventListener('click', function () {
-            // Create updated staff object
+            // récupérer les données anciennes de staff
+            const oldStaff = tab_users[index];
+            
+            // Créer le staff à mettre à jour
             let updatedStaff = {
                 nom: f_name.value,
-                img: worker_img.value,
+                img: worker_img.value && worker_img.value.trim() !== '' ? worker_img.value : "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80",
                 role: role.value,
                 email: worker_email.value,
                 phone: worker_phone.value,
@@ -521,25 +390,26 @@ document.addEventListener('click', function (e) {
             tab_users[index] = updatedStaff;
             localStorage.setItem('staff', JSON.stringify(tab_users));
 
-            // Update the staff in part_right
+            
             updateStaffInPartRight(index, updatedStaff);
-
-            // Update in unassigned staff array if exists
             const unassignedIndex = tableaux_staff_unassigned.findIndex(staff => 
-                staff.nom === staff.nom && staff.role === staff.role
+                staff.nom === oldStaff.nom && staff.role === oldStaff.role
             );
             if (unassignedIndex !== -1) {
                 tableaux_staff_unassigned[unassignedIndex] = updatedStaff;
             }
 
-            // Update in assigned staff arrays
+            // mise à jour dans le tableaux assignedStaff
             for (let roomNumber = 1; roomNumber <= 6; roomNumber++) {
                 if (assignedStaff[roomNumber]) {
                     const assignedIndex = assignedStaff[roomNumber].findIndex(staff => 
-                        staff.nom === staff.nom && staff.role === staff.role
+                        staff.nom === oldStaff.nom && staff.role === oldStaff.role
                     );
                     if (assignedIndex !== -1) {
                         assignedStaff[roomNumber][assignedIndex] = updatedStaff;
+                        
+                        // mettre à jour l'affichage de staffs dans la salle
+                        updateRoomMemberDisplay(roomNumber, oldStaff, updatedStaff);
                     }
                 }
             }
@@ -555,322 +425,70 @@ document.addEventListener('click', function (e) {
                 suucces_btn.style.display = 'none';
             }, 500);
         });
-        add_btn.setAttribute('data-updating-index', index);
     }
 });
-
-
-// Vérification si la salle atteind sa capacité
-function isRoomFull(roomNumber) {
-    const currentCount = assignedStaff[roomNumber] ? assignedStaff[roomNumber].length : 0;
-    const maxCapacity = roomMaxStaff[roomNumber];
-    return currentCount >= maxCapacity;
-}
-
-//  Changer la bordure d'une salle 
-function updateRoomBorder(roomNumber) {
-    const roomElement = document.querySelector(`.room[data-room="${roomNumber}"]`);
-    if (roomElement) {
-        const staffCount = assignedStaff[roomNumber] ? assignedStaff[roomNumber].length : 0;
-        
-        if (staffCount === 0 && roomNumber != 1 && roomNumber != 6) {
-            // si la salle est vide
-            roomElement.classList.add('empty-room');
-            roomElement.classList.remove('occupied-room');
-        } else {
-            // sinon
-            roomElement.classList.remove('empty-room');
-            roomElement.classList.add('occupied-room');
-        }
-    }
-}
-
-// initialiser la bordure de salles obligatoires
-function updateAllRoomBorders() {
-    for (let roomNumber = 1; roomNumber <= 6; roomNumber++) {
-        updateRoomBorder(roomNumber);
-    }
-}
-
-// Traitements pour les buttons assign_user
-document.addEventListener('click', function (e) {
-    
-    if (e.target.classList.contains('assign_user')) {
-        e.preventDefault();
-        const temp = parseInt(e.target.getAttribute('data_numb'));
-        const roomNumber = parseInt(e.target.getAttribute('data-room'));
-
-        // vérifier si la salle est vide avant d'ajouter le ftaff
-        if (isRoomFull(roomNumber)) {
-            alert(`Room ${roomNumber} is full! Maximum ${roomMaxStaff[roomNumber]} staff allowed.`);
-            return;
-        }
-
-        if (temp >= 0 && temp < tableaux_staff_unassigned.length) {
-            const staffToAssign = tableaux_staff_unassigned[temp];
+/* Fonction pour mettre à jour l'affichage des membres  */
+function updateRoomMemberDisplay(roomNumber, oldStaff, updatedStaff) {
+    const roomContainer = document.querySelector(`.room[data-room="${roomNumber}"] .add_member_to_room`);
+    if (roomContainer) {
+        const members = roomContainer.querySelectorAll('.member');
+        members.forEach(member => {
+            const nameElement = member.querySelector('.p1');
+            const roleElement = member.querySelector('.p2');
+            const imgElement = member.querySelector('.member_img img');
             
-            
-            const isAlreadyAssigned = Object.values(assignedStaff).some(roomStaff => 
-                roomStaff.some(staff => 
-                    staff.nom === staffToAssign.nom && staff.role === staffToAssign.role
-                )
-            );
-            
-            if (isAlreadyAssigned) {
-                alert('This staff member is already assigned to a room!');
-                return;
-            }
-
-            if (!assignedStaff[roomNumber]) {
-                assignedStaff[roomNumber] = [];
-            }
-            assignedStaff[roomNumber].push(staffToAssign);
-
-            assignedStaffToRooms.push(staffToAssign);
-
-            // supprimer de tableaux unasssigned
-            tableaux_staff_unassigned = tableaux_staff_unassigned.filter(staff =>
-                !(staff.nom === staffToAssign.nom && staff.role === staffToAssign.role)
-            );
-
-            const div_member = `<div class="member">
-                <div class="member_img"><img src="${staffToAssign.img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt=""></div>
-                <p class="p1">${staffToAssign.nom}</p>
-                <p class="p2">${staffToAssign.role}</p>
-                <button class="remove_member" data-room="${roomNumber}">x</button>
-            </div>`;
-            add_member_to_room[roomNumber-1].insertAdjacentHTML('beforeend', div_member);
-
-            // misa à jour le compteur de staffs
-            if (staff_nbr[roomNumber-1]) {
-                let currentCount = parseInt(staff_nbr[roomNumber-1].textContent) || 0;
-                currentCount++;
-                staff_nbr[roomNumber-1].textContent = currentCount.toString();
-                // Vérification si la salle a ateint sa capacité maximale
-                if (currentCount >= roomMaxStaff[roomNumber]) {
-                    alert(`Room ${roomNumber} has reached maximum capacity (${roomMaxStaff[roomNumber]} staff)!`);
+            if (nameElement && roleElement && 
+                nameElement.textContent === oldStaff.nom && 
+                roleElement.textContent === oldStaff.role) {
+                
+                // // mise à jour de l'affichage de staff
+                nameElement.textContent = updatedStaff.nom;
+                roleElement.textContent = updatedStaff.role;
+                if (imgElement) {
+                    imgElement.src = updatedStaff.img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80';
                 }
             }
-
-            // mise à jour le bordure de salle(pas vide)
-            updateRoomBorder(roomNumber);
-
-            // Supprimer du modal
-            const staffElement = e.target.closest('.staff_infos');
-            if (staffElement) {
-                staffElement.remove();
-            }
-
-            // supprimer de unassigned
-            removeStaffFromUnassignedDisplay(staffToAssign.nom, staffToAssign.role);
-            
-            console.log(`Staff ${staffToAssign.nom} assigned to room ${roomNumber}`);
-            console.log('Remaining unassigned staff:', tableaux_staff_unassigned.length);
-        }
-    }
-
-    // Traitement de buttons remove_member
-    if (e.target.classList.contains('remove_member')) {
-        e.preventDefault();
-        const roomNumber = parseInt(e.target.getAttribute('data-room'));
-        const memberElement = e.target.closest('.member');
-        if (memberElement) {
-            const staffName = memberElement.querySelector('.p1').textContent;
-            const staffRole = memberElement.querySelector('.p2').textContent;
-
-            // trouvé l'objet staff pour le rajouter encore à unassigned
-            let staffToUnassign = null;
-            for (let room in assignedStaff) {
-                const foundStaff = assignedStaff[room].find(staff => 
-                    staff.nom === staffName && staff.role === staffRole
-                );
-                if (foundStaff) {
-                    staffToUnassign = foundStaff;
-                    break;
-                }
-            }
-
-            // mise à jour de compteur (compteur--)
-            if (staff_nbr[roomNumber-1]) {
-                let currentCount = parseInt(staff_nbr[roomNumber-1].textContent) || 0;
-                currentCount = Math.max(0, currentCount - 1);
-                staff_nbr[roomNumber-1].textContent = currentCount.toString();
-            }
-
-            if (assignedStaff[roomNumber]) {
-                assignedStaff[roomNumber] = assignedStaff[roomNumber].filter(staff =>
-                    !(staff.nom === staffName && staff.role === staffRole)
-                );
-            }
-            assignedStaffToRooms = assignedStaffToRooms.filter(staff =>
-                !(staff.nom === staffName && staff.role === staffRole)
-            );
-            
-            // vérifier si la salle est vide
-            updateRoomBorder(roomNumber);
-            
-            // Rajouter à la salle unassigned
-            if (staffToUnassign) {
-                tableaux_staff_unassigned.push(staffToUnassign);
-                addStaffToUnassignedDisplay(staffName, staffRole);
-            }
-            
-            memberElement.remove();
-            
-            console.log(`Staff ${staffName} removed from room ${roomNumber}`);
-            console.log('Remaining unassigned staff:', tableaux_staff_unassigned.length);
-        }
-    }
-
-    // Traitement des buttons delete_user
-    if (e.target.classList.contains('delete_user')) {
-        e.preventDefault();
-
-        const staffElement = e.target.closest('.staff_infos');
-        if (staffElement) {
-            const staffName = staffElement.querySelector('h3').textContent;
-            const staffRole = staffElement.querySelector('p').textContent;
-
-            // mise à jour du compteur pour toutes les salles
-            for (let roomNumber = 1; roomNumber <= 6; roomNumber++) {
-                if (assignedStaff[roomNumber]) {
-                    const wasInRoom = assignedStaff[roomNumber].some(staff =>
-                        staff.nom === staffName && staff.role === staffRole
-                    );
-                    if (wasInRoom && staff_nbr[roomNumber-1]) {
-                        let currentCount = parseInt(staff_nbr[roomNumber-1].textContent) || 0;
-                        currentCount = Math.max(0, currentCount - 1);
-                        staff_nbr[roomNumber-1].textContent = currentCount.toString();
-                        
-                        // mise à jour de bordure
-                        updateRoomBorder(roomNumber);
-                    }
-                }
-            }
-            
-            tableaux_staff_unassigned = tableaux_staff_unassigned.filter(staff =>
-                !(staff.nom === staffName && staff.role === staffRole)
-            );
-            tab_users = tab_users.filter(staff =>
-                !(staff.nom === staffName && staff.role === staffRole)
-            );
-
-            for (let room in assignedStaff) {
-                assignedStaff[room] = assignedStaff[room].filter(staff =>
-                    !(staff.nom === staffName && staff.role === staffRole)
-                );
-            }
-            assignedStaffToRooms = assignedStaffToRooms.filter(staff =>
-                !(staff.nom === staffName && staff.role === staffRole)
-            );
-
-            localStorage.setItem('staff', JSON.stringify(tab_users));
-
-            staffElement.remove();
-        }
-    }
-});
-
-function attachEventListenersToNewStaff() {
-    const details_user = document.querySelectorAll('.details_user');
-    details_user.forEach(details_btn => {
-        details_btn.addEventListener('click', function () {
-            const index = this.getAttribute('data-index');
-            const currentStaff = tab_users[index];
-
-            modale_infos_user.classList.add('open');
-            modale_infos_user.innerHTML = `<button class="hide_modale_user" id="hide_modale_user">x</button>
-            <div class="head_cv">
-                <div class="left_side_cv">
-                <img src="${currentStaff.img}" alt="">
-                </div>
-            <div class="right_side_cv">
-                <div class="first_side">
-                <div><span>Nom : </span>${currentStaff.nom}</div>
-                <div><span>Role : </span>${currentStaff.role}</div>
-                <div><span>Email : </span>${currentStaff.email}</div>
-                </div>
-                <div class="second_side">
-                    <div><span>Phone : </span>${currentStaff.phone}</div>
-                    <div><span>Location : </span>${currentStaff.location}</div>
-                </div>
-            </div>
-            </div>
-            <div class="table_exp">
-                <h2>Experiences :</h2>
-                <table id="tableaux_exp">
-                    <tr>
-                        <th>Experience</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                    </tr>
-                    ${currentStaff.experience.map(exp => `
-                        <tr>
-                            <td>${exp.experience}</td>
-                            <td>${exp.start_date}</td>
-                            <td>${exp.end_date}</td>
-                        </tr>
-                    `).join('')}
-                </table>
-            </div>`;
-
-            document.getElementById('hide_modale_user').addEventListener('click', () => {
-                modale_infos_user.classList.remove('open');
-            });
         });
-    });
+    }
 }
 
-function removeStaffFromUnassignedDisplay(staffName, staffRole) {
+// fonction de mise à jour de staffs dans la partie unassigned
+function updateStaffInPartRight(index, staff) {
     const staffElements = document.querySelectorAll('.part_users_added');
-
-    staffElements.forEach(element => {
-        const nameElement = element.querySelector('h3');
-        const roleElement = element.querySelector('p');
-
-        if (nameElement && roleElement &&
-            nameElement.textContent === staffName &&
-            roleElement.textContent === staffRole) {
-            element.remove();
+    if (staffElements[index]) {
+        const staffElement = staffElements[index];
+        
+        // mettre à jour l'image
+        const imgElement = staffElement.querySelector('.user_photo img');
+        if (imgElement) {
+            imgElement.src = staff.img || 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
         }
-    });
-}
-
-function addStaffToUnassignedDisplay(staffName, staffRole) {
-    const staff = tableaux_staff_unassigned.find(staff =>
-        staff.nom === staffName && staff.role === staffRole
-    );
-    if (staff) {
-        const staffIndex = tab_users.findIndex(s =>
-            s.nom === staffName && s.role === staffRole
-        );
-        if (staffIndex !== -1) {
-            const staffHTML = `<div class="part_users_added">
-                <div class="user_photo">
-                    <img src="${staff.img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt="">
-                </div>
-                <h3>${staff.nom}</h3>
-                <p>${staff.role}</p>
-                <button class="details_user" data-index="${staffIndex}">Details</button>
-                <button class="modifier_user" data-index="${staffIndex}"><i class='bxr  bx-pencil'  style='color:#000000'  ></i> </button>
-            </div>`;
-
-            part_right.insertAdjacentHTML('beforeend', staffHTML);
-            attachEventListenersToNewStaff();
+        
+        // mettre à jour le nom
+        const nameElement = staffElement.querySelector('h3');
+        if (nameElement) {
+            nameElement.textContent = staff.nom;
+        }
+        
+        // mettre à jour le role
+        const roleElement = staffElement.querySelector('p');
+        if (roleElement) {
+            roleElement.textContent = staff.role;
+        }
+    } else {
+        // Alternative method: Try to find by data-index attribute
+        const staffByDataIndex = document.querySelector(`.part_users_added[data-index="${index}"]`);
+        if (staffByDataIndex) {
+            const imgElement = staffByDataIndex.querySelector('.user_photo img');
+            const nameElement = staffByDataIndex.querySelector('h3');
+            const roleElement = staffByDataIndex.querySelector('p');
+            
+            if (imgElement) imgElement.src = staff.img || 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
+            if (nameElement) nameElement.textContent = staff.nom;
+            if (roleElement) roleElement.textContent = staff.role;
         }
     }
 }
-// Inisialiser le compteur de staffs et le bordure quand la page a actualisé
-document.addEventListener('DOMContentLoaded', function() {
-    for (let roomNumber = 1; roomNumber <= 6; roomNumber++) {
-        const count = assignedStaff[roomNumber] ? assignedStaff[roomNumber].length : 0;
-        if (staff_nbr[roomNumber-1]) {
-            staff_nbr[roomNumber-1].textContent = count.toString();
-        }
-        if (staff_max[roomNumber-1]) {
-            staff_max[roomNumber-1].textContent = roomMaxStaff[roomNumber].toString();
-        }
-    }
-    // Initialize room borders
-    updateAllRoomBorders();
-});
+
+
+
