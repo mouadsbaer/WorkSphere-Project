@@ -49,6 +49,17 @@ let assignedStaff = {
 let currentRoomNumber = null;
 let assignedStaffToRooms = [];
 let staff_nbr = document.querySelectorAll('.staff_nbr');
+let staff_max = document.querySelectorAll('.staff_max');
+
+// Define maximum staff for each room
+const roomMaxStaff = {
+    1: 4,
+    2: 3,
+    3: 3,
+    4: 2,
+    5: 6,
+    6: 5
+};
 
 cercle.style.left = '1px';
 
@@ -519,6 +530,14 @@ document.addEventListener('click', function (e) {
     }
 });
 
+// Function to check if room has reached maximum capacity
+function isRoomFull(roomNumber) {
+    const currentCount = assignedStaff[roomNumber] ? assignedStaff[roomNumber].length : 0;
+    const maxCapacity = roomMaxStaff[roomNumber];
+    return currentCount >= maxCapacity;
+}
+
+
 // Traitements pour les buttons assign_user
 document.addEventListener('click', function (e) {
     
@@ -527,14 +546,38 @@ document.addEventListener('click', function (e) {
         const temp = parseInt(e.target.getAttribute('data_numb'));
         const roomNumber = parseInt(e.target.getAttribute('data-room'));
 
+        // vérifier si la salle est pleine
+        if (isRoomFull(roomNumber)) {
+            alert(`Room ${roomNumber} is full! Maximum ${roomMaxStaff[roomNumber]} staff allowed.`);
+            return;
+        }
+
         if (temp >= 0 && temp < tableaux_staff_unassigned.length) {
             const staffToAssign = tableaux_staff_unassigned[temp];
+            
+            // vérification si le staff a déjà assigné à une salle
+            const isAlreadyAssigned = Object.values(assignedStaff).some(roomStaff => 
+                roomStaff.some(staff => 
+                    staff.nom === staffToAssign.nom && staff.role === staffToAssign.role
+                )
+            );
+            
+            if (isAlreadyAssigned) {
+                alert('This staff member is already assigned to a room!');
+                return;
+            }
+
             if (!assignedStaff[roomNumber]) {
                 assignedStaff[roomNumber] = [];
             }
             assignedStaff[roomNumber].push(staffToAssign);
 
             assignedStaffToRooms.push(staffToAssign);
+
+            // supprimer de tableaux des staffs assignées
+            tableaux_staff_unassigned = tableaux_staff_unassigned.filter(staff =>
+                !(staff.nom === staffToAssign.nom && staff.role === staffToAssign.role)
+            );
 
             const div_member = `<div class="member">
                 <div class="member_img"><img src="${staffToAssign.img || 'https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80'}" alt=""></div>
@@ -544,18 +587,25 @@ document.addEventListener('click', function (e) {
             </div>`;
             add_member_to_room[roomNumber-1].insertAdjacentHTML('beforeend', div_member);
 
-            // Update staff counter - INCREMENT
+            // mise à jour le compteur de staffs
             if (staff_nbr[roomNumber-1]) {
                 let currentCount = parseInt(staff_nbr[roomNumber-1].textContent) || 0;
                 currentCount++;
                 staff_nbr[roomNumber-1].textContent = currentCount.toString();
+                
+                // vérifier si la salle a atteind sa capacité maximale de staffs
+                if (currentCount >= roomMaxStaff[roomNumber]) {
+                    alert(`Room ${roomNumber} has reached maximum capacity (${roomMaxStaff[roomNumber]} staff)!`);
+                }
             }
 
+            // Supprimer du modal
             const staffElement = e.target.closest('.staff_infos');
             if (staffElement) {
                 staffElement.remove();
             }
 
+            // Supprimer de staffs non assignées
             removeStaffFromUnassignedDisplay(staffToAssign.nom, staffToAssign.role);
         }
     }
@@ -569,7 +619,19 @@ document.addEventListener('click', function (e) {
             const staffName = memberElement.querySelector('.p1').textContent;
             const staffRole = memberElement.querySelector('.p2').textContent;
 
-            // Update staff counter - DECREMENT
+            // Find the staff object to add back to unassigned
+            let staffToUnassign = null;
+            for (let room in assignedStaff) {
+                const foundStaff = assignedStaff[room].find(staff => 
+                    staff.nom === staffName && staff.role === staffRole
+                );
+                if (foundStaff) {
+                    staffToUnassign = foundStaff;
+                    break;
+                }
+            }
+
+            //mise à jour du compteur de staffs
             if (staff_nbr[roomNumber-1]) {
                 let currentCount = parseInt(staff_nbr[roomNumber-1].textContent) || 0;
                 currentCount = Math.max(0, currentCount - 1);
@@ -584,55 +646,20 @@ document.addEventListener('click', function (e) {
             assignedStaffToRooms = assignedStaffToRooms.filter(staff =>
                 !(staff.nom === staffName && staff.role === staffRole)
             );
-            addStaffToUnassignedDisplay(staffName, staffRole);
+            
+            // ajouter à la partie unassigned
+            if (staffToUnassign) {
+                tableaux_staff_unassigned.push(staffToUnassign);
+                addStaffToUnassignedDisplay(staffName, staffRole);
+            }
+            
             memberElement.remove();
+            
+           
         }
     }
 
-    // Traitement des buttons delete_user
-    if (e.target.classList.contains('delete_user')) {
-        e.preventDefault();
 
-        const staffElement = e.target.closest('.staff_infos');
-        if (staffElement) {
-            const staffName = staffElement.querySelector('h3').textContent;
-            const staffRole = staffElement.querySelector('p').textContent;
-            
-            // Update staff counters for all rooms where this staff was assigned
-            for (let roomNumber = 1; roomNumber <= 6; roomNumber++) {
-                if (assignedStaff[roomNumber]) {
-                    const wasInRoom = assignedStaff[roomNumber].some(staff =>
-                        staff.nom === staffName && staff.role === staffRole
-                    );
-                    if (wasInRoom && staff_nbr[roomNumber-1]) {
-                        let currentCount = parseInt(staff_nbr[roomNumber-1].textContent) || 0;
-                        currentCount = Math.max(0, currentCount - 1);
-                        staff_nbr[roomNumber-1].textContent = currentCount.toString();
-                    }
-                }
-            }
-            
-            tableaux_staff_unassigned = tableaux_staff_unassigned.filter(staff =>
-                !(staff.nom === staffName && staff.role === staffRole)
-            );
-            tab_users = tab_users.filter(staff =>
-                !(staff.nom === staffName && staff.role === staffRole)
-            );
-
-            for (let room in assignedStaff) {
-                assignedStaff[room] = assignedStaff[room].filter(staff =>
-                    !(staff.nom === staffName && staff.role === staffRole)
-                );
-            }
-            assignedStaffToRooms = assignedStaffToRooms.filter(staff =>
-                !(staff.nom === staffName && staff.role === staffRole)
-            );
-
-            localStorage.setItem('staff', JSON.stringify(tab_users));
-
-            staffElement.remove();
-        }
-    }
 });
 
 function attachEventListenersToNewStaff() {
@@ -725,12 +752,15 @@ function addStaffToUnassignedDisplay(staffName, staffRole) {
     }
 }
 
-// initialisation de compteur de staff
+// Initialize staff counts when page loads
 document.addEventListener('DOMContentLoaded', function() {
     for (let roomNumber = 1; roomNumber <= 6; roomNumber++) {
         const count = assignedStaff[roomNumber] ? assignedStaff[roomNumber].length : 0;
         if (staff_nbr[roomNumber-1]) {
             staff_nbr[roomNumber-1].textContent = count.toString();
+        }
+        if (staff_max[roomNumber-1]) {
+            staff_max[roomNumber-1].textContent = roomMaxStaff[roomNumber].toString();
         }
     }
 });
