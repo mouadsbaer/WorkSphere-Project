@@ -131,6 +131,7 @@ add_btn.addEventListener('click', () => {
     end_date.value = '';
     worker_local.value = '';
 
+
     tableaux_experiences = [];
     setTimeout(() => {
         modale.classList.remove("open");
@@ -143,7 +144,7 @@ add_btn.addEventListener('click', () => {
 
 
 document.addEventListener('click', function(e) {
-    // cacher la zone de recherche s'il y a un click 
+    // cacher la zone de recherche si l'utilisateur a cliqué
     if (!search_zone.contains(e.target) && e.target !== search_input) {
         search_zone.style.display = 'none';
     }
@@ -152,7 +153,7 @@ document.addEventListener('click', function(e) {
 search_input.addEventListener('keyup', () => {
     const searchValue = search_input.value.trim().toLowerCase();
     
-    // Vider la zone 
+    // Vider la zone de recherche
     search_zone.innerHTML = '';
     
     // cacher la zone de recherche s'elle est vide
@@ -162,7 +163,6 @@ search_input.addEventListener('keyup', () => {
     }
     
     let foundAny = false;
-    
     for(let i = 0; i < tab_users.length; i++) {
         const userName = tab_users[i].nom.toLowerCase();
         const role_staff = tab_users[i].role.toLowerCase(); 

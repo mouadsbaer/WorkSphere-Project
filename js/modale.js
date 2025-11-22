@@ -95,14 +95,6 @@ worker_img.addEventListener('keyup', function () {
     }
 });
 
-worker_img.addEventListener('change', function () {
-    if (this.value && this.value.trim() !== '') {
-        previsualisation.src = this.value;
-    } else {
-        previsualisation.src = "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
-    }
-});
-
 /* Désaffichage de modale d'ajouter un staff  */
 remove_btn.addEventListener('click', () => {
     modale.classList.remove("open");
@@ -374,10 +366,10 @@ document.addEventListener('click', function (e) {
         // ajouter événement à update button
         const update_user = document.getElementById('update_user');
         update_user.addEventListener('click', function () {
-            // récupérer les données anciennes de staff
+            
             const oldStaff = tab_users[index];
             
-            // Créer le staff à mettre à jour
+            
             let updatedStaff = {
                 nom: f_name.value,
                 img: worker_img.value && worker_img.value.trim() !== '' ? worker_img.value : "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80",
@@ -416,11 +408,11 @@ document.addEventListener('click', function (e) {
                 }
             }
 
-            // afficher le message de succées
+            
             suucces_btn.style.display = 'block';
             suucces_btn.textContent = "Staff updated successfully!";
 
-            // vider le formulaire et fermer le modale
+            
             resetForm();
             setTimeout(() => {
                 modale.classList.remove("open");
@@ -429,6 +421,7 @@ document.addEventListener('click', function (e) {
         });
     }
 });
+
 /* Fonction pour mettre à jour l'affichage des membres  */
 function updateRoomMemberDisplay(roomNumber, oldStaff, updatedStaff) {
     const roomContainer = document.querySelector(`.room[data-room="${roomNumber}"] .add_member_to_room`);
