@@ -320,7 +320,7 @@ document.addEventListener('click', function (e) {
 
             // mise à jour dans le tableaux assignedStaff
             for (let roomNumber = 1; roomNumber <= 6; roomNumber++) {
-                if (assignedStaff[roomNumber]) {
+                if (assignedStaff[roomNumber]) { 
                     const assignedIndex = assignedStaff[roomNumber].findIndex(staff => 
                         staff.nom === oldStaff.nom && staff.role === oldStaff.role
                     );
