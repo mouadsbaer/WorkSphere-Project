@@ -1419,3 +1419,12 @@ body.dark{
 .search_zone.dark{
     background: #2196F3;
 }
+.succees{
+    background-color: #07d507;
+    color: whitesmoke;
+    padding: 5px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    width: fit-content;
+}

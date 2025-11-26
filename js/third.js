@@ -95,7 +95,7 @@ worker_img.addEventListener('keyup', function () {
     }
 });
 
-/* Désaffichage de modale d'ajouter un staff  */
+/* Désaffichage de modale d'ajout de staffs  */
 remove_btn.addEventListener('click', () => {
     modale.classList.remove("open");
     suucces_btn.style.display = 'none';
@@ -344,7 +344,6 @@ document.addEventListener('click', function (e) {
         const staff = tab_users[index];
         modale.classList.add('open');
         f_name.value = staff.nom;
-
         worker_img.value = staff.img;
         role.value = staff.role;
         worker_email.value = staff.email;
@@ -363,13 +362,11 @@ document.addEventListener('click', function (e) {
         const temp = `<button id="update_user">Update</button>`;
         modal_btns.insertAdjacentHTML('beforeend', temp);
 
-        // ajouter événement à update button
+        
         const update_user = document.getElementById('update_user');
         update_user.addEventListener('click', function () {
-            
             const oldStaff = tab_users[index];
-            
-            
+
             let updatedStaff = {
                 nom: f_name.value,
                 img: worker_img.value && worker_img.value.trim() !== '' ? worker_img.value : "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80",
@@ -422,7 +419,7 @@ document.addEventListener('click', function (e) {
     }
 });
 
-/* Fonction pour mettre à jour l'affichage des membres  */
+/* Fonction pour mettre à jour l'affichage des membres assingés */
 function updateRoomMemberDisplay(roomNumber, oldStaff, updatedStaff) {
     const roomContainer = document.querySelector(`.room[data-room="${roomNumber}"] .add_member_to_room`);
     if (roomContainer) {

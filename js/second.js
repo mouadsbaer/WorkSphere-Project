@@ -6,7 +6,7 @@ document.addEventListener('click', function (e) {
         const temp = parseInt(e.target.getAttribute('data_numb'));
         const roomNumber = parseInt(e.target.getAttribute('data-room'));
 
-        // vérifier si la salle est vide avant d'ajouter le ftaff
+        // vérifier si la salle est vide avant d'ajouter le staff
         if (isRoomFull(roomNumber)) {
             alert(`Room ${roomNumber} is full! Maximum ${roomMaxStaff[roomNumber]} staff allowed.`);
             return;
@@ -112,7 +112,6 @@ document.addEventListener('click', function (e) {
                 !(staff.nom === staffName && staff.role === staffRole)
             );
             
-            // vérifier si la salle est vide
             updateRoomBorder(roomNumber);
             
             // Rajouter à la salle unassigned

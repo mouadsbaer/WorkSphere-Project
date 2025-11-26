@@ -186,3 +186,4 @@ search_input.addEventListener('keyup', () => {
         search_zone.style.display = "block";
     }
 });
+localStorage.clear()
